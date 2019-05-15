@@ -10,6 +10,7 @@ class GridModel {
     }
     
     loadRegion(regionId) {
+        this.regionId = regionId;
         let region = this.regions[regionId];
         this.columns = region.grid[0].Columns.length;
         this.rows = region.grid.length;
@@ -33,6 +34,20 @@ class GridModel {
 
     getCurrentRegion(){
         return this.regions[this.regionId];
+    }
+
+    drop(x, y, monster){
+        let nodeX = Math.floor(x / GridNodeModel.nodeSize);
+        let nodeY = Math.floor(y / GridNodeModel.nodeSize);
+        if(nodeX >= 0 && nodeX < this.columns && nodeY >= 0 && nodeY < this.rows){
+            this.grid[nodeY * this.columns + nodeX].placeMonster(monster);
+            return true;
+        }
+        return false;
+    }
+
+    getNonWalkableImage(){
+        return this.getCurrentRegion()["non-walkable-image"];
     }
 
 }

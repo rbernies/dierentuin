@@ -4,6 +4,24 @@ class GridView {
         this.columns = columns;
         this.rows = rows;
         this.controller = controller;
+
+        this.canvas = document.querySelector('canvas');
+        this.g = this.canvas.getContext('2d');
+
+        const debounce = (func) => {
+            let timer
+            return (event) => {
+              if (timer) { clearTimeout(timer) }
+              timer = setTimeout(func, 100, event)
+            }
+        }
+          
+        window.addEventListener('resize', debounce(() => {
+            this.resize();
+        }))
+
+        this.resize();
+
         this.addRegionOptions();
     }
 
@@ -19,19 +37,44 @@ class GridView {
             sRegion.appendChild(option);
         }
 
-        sRegion.onchange = () => { this.controller.changeRegion(sRegion.selectedIndex); };
+        sRegion.onchange = () => { 
+            this.controller.changeRegion(sRegion.selectedIndex);
+            this.resize();
+        };
     }
 
-    resize(canvas, g) {
+    drop(x, y, monster){
+        let rect = this.canvas.getBoundingClientRect();
+        x -= rect.left;
+        y -= rect.top;
+        if(x <= rect.right && y <= rect.bottom)
+            return this.controller.model.drop(x, y, monster);
+        return false;
+    }
+
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+
         this.controller.model.calculateNodeSize();
         let nodeSize = GridNodeModel.nodeSize;
 
-        canvas.width = this.columns *  nodeSize;
-        canvas.height = this.rows * nodeSize;
-        
+        this.canvas.width = this.columns *  nodeSize;
+        this.canvas.height = this.rows * nodeSize;
+
+        let grid = this.controller.model.grid;
+        let image = this.controller.model.getNonWalkableImage();
+
         for(let y = 0; y < this.rows; y++){
             for(let x = 0; x < this.columns; x++){
-                g.strokeRect(x * nodeSize, y * nodeSize, nodeSize, nodeSize);
+                this.g.strokeRect(x * nodeSize, y * nodeSize, nodeSize, nodeSize);
+                if(grid[y * this.columns + x].isWalkable() > 0){
+                    let img = new Image();
+                    img.onload = () => {
+                        this.g.drawImage(img, x * nodeSize, y * nodeSize, nodeSize, nodeSize);
+                    }
+                    img.src = image;
+                }
             }
         }
     }

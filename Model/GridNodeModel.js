@@ -21,4 +21,9 @@ class GridNodeModel {
     containsMonster(){
         return (monster != null);
     }
+
+    isWalkable(){
+        return this.walkable;
+    }
+
 }

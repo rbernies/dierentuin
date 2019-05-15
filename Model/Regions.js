@@ -4,6 +4,8 @@ let regionData = `[
     "name":"Jungle",
     
     "climate":"bear grylls approved temperature",
+
+    "non-walkable-image":"resources/img/bush.jpg",
     
     "reference city": "Rio",
     
@@ -36,6 +38,8 @@ let regionData = `[
     "name":"IcePole",
     
     "climate":"sub-zero cold",
+
+    "non-walkable-image":"resources/img/water.jpg",
     
     "reference city": "Amsterdam",
     
@@ -68,6 +72,8 @@ let regionData = `[
     "name":"Sjahari",
     
     "climate":"burning hot",
+
+    "non-walkable-image":"resources/img/cactus.png",
     
     "reference city": "Marrakech",
     
