@@ -1,14 +1,16 @@
 class GridModel {
     
-    constructor(){
+    constructor(regionId){
+        this.regionId = regionId;
         this.columns = 10;
         this.rows = 10;
         this.grid = [];
-        this.loadRegion(JSON.parse(regionData), 0);
+        this.regions = JSON.parse(regionData);
+        this.loadRegion(regionId);
     }
-
-    loadRegion(regions, regionId) {
-        let region = regions[regionId];
+    
+    loadRegion(regionId) {
+        let region = this.regions[regionId];
         this.columns = region.grid[0].Columns.length;
         this.rows = region.grid.length;
         for(let y = 0; y < this.rows; y++){
@@ -16,6 +18,21 @@ class GridModel {
                 this.grid[y * this.columns + x] = new GridNodeModel(region.grid[y].Columns[x]);
             }
         }
+
+        this.weatherModel = new WeatherModel(region["reference city"]);
+    }
+
+    calculateNodeSize(){
+        let w = (window.innerWidth * 0.6) / this.columns;
+        let h = (window.innerHeight * 0.8) / this.rows;
+        let nodeSize = h;
+        if(nodeSize > w) nodeSize = w;
+        nodeSize = Math.floor(nodeSize);
+        GridNodeModel.nodeSize = nodeSize
+    }
+
+    getCurrentRegion(){
+        return this.regions[this.regionId];
     }
 
 }

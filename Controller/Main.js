@@ -1,3 +1,2 @@
-this.gridModel = new GridModel();
-this.gridView = new GridView(gridModel.columns, gridModel.rows);
-this.canvas = new Canvas(gridView);
+this.gridController = new GridController(0);
+this.canvas = new Canvas(gridController.view);

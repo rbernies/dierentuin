@@ -25,4 +25,11 @@ class Canvas {
         this.canvas.height = window.innerHeight;
         this.gridView.resize(this.canvas, this.g);
     }
+
+    
+
+    drop(x, y, monster){
+        //check if x and y are inside canvas, if so then call drop function inside gridmodel
+        return false;
+    }
 }

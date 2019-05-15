@@ -11,8 +11,10 @@
     <script src="Model/Regions.js"></script>
     <script src="Model/GridModel.js"></script>
     <script src="Model/GridNodeModel.js"></script>
+    <script src="Model/WeatherModel.js"></script>
     <script src="View/GridView.js"></script>
     <script src="View/Canvas.js"></script>
+    <script src="Controller/GridController.js"></script>
     <script src="Controller/Main.js" defer></script>
 </head>
 <body>
@@ -24,7 +26,8 @@
             </div>
         </div>
         <div class="col-md-9" id="zoo">
-            <h2>Select Region</h2>
+            <h3>Select Region:</h3>
+            <select id="region-select"></select>
             <div class="panel">
                 <canvas></canvas>
             </div>

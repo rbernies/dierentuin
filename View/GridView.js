@@ -1,27 +1,37 @@
 class GridView {
 
-    constructor(columns, rows){
+    constructor(controller, columns, rows){
         this.columns = columns;
         this.rows = rows;
-        this.columnSize = 0;
+        this.controller = controller;
+        this.addRegionOptions();
+    }
+
+    addRegionOptions(){
+        let sRegion = document.getElementById("region-select");
+        let regions = this.controller.getRegions();
+
+        for(let i = 0; i < regions.length; i++){
+            let option = document.createElement("option");
+            option.setAttribute("value", i);
+            let text = document.createTextNode(regions[i].name);
+            option.appendChild(text);
+            sRegion.appendChild(option);
+        }
+
+        sRegion.onchange = () => { this.controller.changeRegion(sRegion.selectedIndex); };
     }
 
     resize(canvas, g) {
-        let w = (window.innerWidth * 0.6) / this.columns;
-        let h = (window.innerHeight * 0.8) / this.rows;
-        this.columnSize = h;
-        if(this.columnSize > w) this.columnSize = w;
-        this.columnSize = Math.floor(this.columnSize);
-        console.log(w + ", " + h + ", " + this.columnSize);
-        
-        canvas.width = this.columns * this.columnSize;
-        canvas.height = this.rows * this.columnSize;
-        console.log(canvas.width + ", " + canvas.height);
+        this.controller.model.calculateNodeSize();
+        let nodeSize = GridNodeModel.nodeSize;
+
+        canvas.width = this.columns *  nodeSize;
+        canvas.height = this.rows * nodeSize;
         
         for(let y = 0; y < this.rows; y++){
             for(let x = 0; x < this.columns; x++){
-                g.rect(x * this.columnSize, y * this.columnSize, this.columnSize, this.columnSize);
-                g.stroke();
+                g.strokeRect(x * nodeSize, y * nodeSize, nodeSize, nodeSize);
             }
         }
     }
