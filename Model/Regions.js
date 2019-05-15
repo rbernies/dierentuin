@@ -1,10 +1,11 @@
-[
-
+let regionData = `[
     {
     
     "name":"Jungle",
     
     "climate":"bear grylls approved temperature",
+
+    "non-walkable-image":"resources/img/bush.jpg",
     
     "reference city": "Rio",
     
@@ -27,7 +28,7 @@
     { "name":"Row8", "Columns":[ "1", "0", "0", "1", "0", "0", "0", "0", "0","1" ] },
     
     { "name":"Row9", "Columns":[ "1", "0", "0", "0", "1", "1", "0", "0", "0","1" ] },
-    
+
     { "name":"Row10", "Columns":[ "1", "0", "0", "0", "1", "1", "0", "0", "0","1" ] }]
     
     },
@@ -37,6 +38,8 @@
     "name":"IcePole",
     
     "climate":"sub-zero cold",
+
+    "non-walkable-image":"resources/img/water.jpg",
     
     "reference city": "Amsterdam",
     
@@ -69,6 +72,8 @@
     "name":"Sjahari",
     
     "climate":"burning hot",
+
+    "non-walkable-image":"resources/img/cactus.png",
     
     "reference city": "Marrakech",
     
@@ -96,4 +101,4 @@
     
     }
     
-    ]
+    ]`;
