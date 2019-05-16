@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-
-    <script src="Model/Monsters/Monsters.js"></script>
     <script src="View/ConfiguratorView.js"></script>
     <script src="Controller/ConfiguratorController.js"></script>
     <script src="Model/Configurator/ConfiguratorModel.js"></script>
@@ -26,16 +26,19 @@
     <script src="Controller/GridController.js"></script>
     <script src="Controller/Main.js" defer></script>
 </head>
+
 <body>
     <div class="modal-body row" id="container">
         <div class="col-md-3" id="editor">
+            <form>
             <h3>Monster Configurator</h3>
-            <div id="monsterTypeArea">
+            <div class="form-group" id="monsterTypeArea">
 
             </div>
             <div id="configuratorArea">
 
             </div>
+        </form>
         </div>
         <div class="col-md-9" id="zoo">
             <h3>Select Region:</h3>
@@ -46,4 +49,5 @@
         </div>
     </div>
 </body>
+
 </html>
