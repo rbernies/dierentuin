@@ -48,10 +48,11 @@ class ConfiguratorView{
 
     startMonsterCreator(monsterOptions){
         this.resetMonsterCreator();
-        this.createArmAmountSelector(monsterOptions.armAmount);
+        this.createArmAmountSelector(monsterOptions.armAmountOption);
     }
 
     createArmAmountSelector(armAmount){
+        if(armAmount != null){
         let armSelector = document.getElementById("amountSelector");
         let title = document.getElementById("title");
 
@@ -66,14 +67,14 @@ class ConfiguratorView{
         amountSelector.setAttribute("id", "amountSelector");
         this.configuratorDiv.appendChild(amountSelector); 
       
-        for(let i = 0; i <= armAmount; i++){
+        for(let i = 0; i < armAmount.length; i++){
             let list = document.createElement("option")
             list.setAttribute("value", "selector");
-            let option = document.createTextNode(i);
+            let option = document.createTextNode(armAmount[i]);
             list.appendChild(option);
             document.getElementById("amountSelector").appendChild(list);
         }       
     }
-
+    }
 
 }
