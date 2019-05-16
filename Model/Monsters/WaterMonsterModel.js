@@ -8,6 +8,7 @@ class WaterMonsterModel {
     this.furOption = ["scales", "slime"];
     this.colorOption = ["blue", "red", "green"];
 
+    this.armAmount = 8;
     this.canFly = false;
     this.canSwim = true;
   }

@@ -42,6 +42,10 @@ class ConfiguratorView {
         monsterSelector.onchange = () => this.controller.startMonsterCreation(monsterSelector.value);
     }
 
+    updateConfigurator(monsterOptions) {
+        document.getElementById(monsterOptions.armAmount).selected = "true";
+    }
+
     resetMonsterCreator() {
         while (this.configuratorDiv.firstChild) {
             this.configuratorDiv.removeChild(this.configuratorDiv.firstChild);
@@ -72,12 +76,13 @@ class ConfiguratorView {
 
             for (let i = 0; i < armAmount.length; i++) {
                 let list = document.createElement("option")
-                list.setAttribute("value", "selector");
+                list.setAttribute("id", i);
+                list.setAttribute("value", armAmount[i]);
                 let option = document.createTextNode(armAmount[i]);
                 list.appendChild(option);
                 armAmountSelector.appendChild(list);
             }
-            armAmountSelector.onchange = () => this.controller.updateMonster("armSelector");
+            armAmountSelector.onchange = () => this.controller.updateMonster("armSelector", armAmountSelector.value);
         }
     }
 
@@ -100,7 +105,7 @@ class ConfiguratorView {
                 list.appendChild(option);
                 armTypeSelector.appendChild(list);
             }
-            armTypeSelector.onchange = () => this.controller.updateMonster("armType");
+            armTypeSelector.onchange = () => this.controller.updateMonster("armType", armTypeSelector.value);
         }
     }
 
@@ -123,7 +128,7 @@ class ConfiguratorView {
                 list.appendChild(option);
                 legAmountSelector.appendChild(list);
             }
-            legAmountSelector.onchange = () => this.controller.updateMonster("legAmount");
+            legAmountSelector.onchange = () => this.controller.updateMonster("legAmount", legAmountSelector.value);
         }
     }
 
@@ -146,11 +151,11 @@ class ConfiguratorView {
                 list.appendChild(option);
                 eyeAmountSelector.appendChild(list);
             }
-            eyeAmountSelector.onchange = () => this.controller.updateMonster("eyeAmount");
+            eyeAmountSelector.onchange = () => this.controller.updateMonster("eyeAmount", eyeAmountSelector.value);
         }
     }
 
-    createFurSelector(furType){
+    createFurSelector(furType) {
         let furTypeSelector = document.createElement("SELECT");
         furTypeSelector.className = "form-control";
 
@@ -168,10 +173,10 @@ class ConfiguratorView {
             list.appendChild(option);
             furTypeSelector.appendChild(list);
         }
-        furTypeSelector.onchange = () => this.controller.updateMonster("furType");
+        furTypeSelector.onchange = () => this.controller.updateMonster("furType", furTypeSelector.value);
     }
 
-    createColorSelector(colors){
+    createColorSelector(colors) {
         let colorSelector = document.createElement("SELECT");
         colorSelector.className = "form-control";
 
@@ -189,7 +194,6 @@ class ConfiguratorView {
             list.appendChild(option);
             colorSelector.appendChild(list);
         }
-        colorSelector.onchange = () => this.controller.updateMonster("color");
+        colorSelector.onchange = () => this.controller.updateMonster("color", colorSelector.value);
     }
-
 }

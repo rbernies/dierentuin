@@ -24,5 +24,4 @@ class EarthMonsterModel {
                 return null;
         }
     }
-
 }

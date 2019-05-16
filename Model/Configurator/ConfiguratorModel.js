@@ -18,10 +18,9 @@ class ConfiguratorModel {
                 return this.newMonster;
             case "wind":
                 this.newMonster = new WindMonsterModel();
-                return newMonster;
+                return this.newMonster;
             default:
                 return null;
         }
     }
-
 }

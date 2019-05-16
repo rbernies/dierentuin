@@ -10,8 +10,8 @@ class ConfiguratorController {
         this.view.startMonsterCreator(this.model.getMonsterOptions(monsterType));
     }
 
-    updateMonster(option){
-        this.model.newMonster.updateMonster(option);
+    updateMonster(option, value){
+        this.model.newMonster.updateMonster(option, value);
+        this.view.updateConfigurator(this.model.newMonster);
     }
-
 }
