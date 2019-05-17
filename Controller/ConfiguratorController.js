@@ -1,12 +1,17 @@
-class ConfiguratorController{
+class ConfiguratorController {
 
-    constructor(){
+    constructor() {
         this.model = new ConfiguratorModel();
-        this.view = new ConfiguratorView(this);
-        this.view.createMonsterTypeSelector(this.model.getMonsterTypes());
+        this.view = new ConfiguratorView(this, this.model.getMonsterTypes());
+        this.startMonsterCreation("water");
     }
 
-    startMonsterCreation(monsterType){
+    startMonsterCreation(monsterType) {
         this.view.startMonsterCreator(this.model.getMonsterOptions(monsterType));
+    }
+
+    updateMonster(option, value){
+        this.model.newMonster.updateMonster(option, value);
+        this.view.updateConfigurator(this.model.newMonster);
     }
 }
