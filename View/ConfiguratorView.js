@@ -3,7 +3,7 @@ class ConfiguratorView{
     constructor(controller){
         
         this.controller = controller;
-        this.configuratorDiv = document.getElementById("editor");
+        this.configuratorDiv = document.getElementById("configDiv");
         this.createNameField();
     }
 
