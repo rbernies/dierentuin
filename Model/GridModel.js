@@ -16,20 +16,20 @@ class GridModel {
         this.rows = region.grid.length;
         for(let y = 0; y < this.rows; y++){
             for(let x = 0; x < this.columns; x++){
-                this.grid[y * this.columns + x] = new GridNodeModel(region.grid[y].Columns[x]);
+                this.grid[y * this.columns + x] = new TileModel(region.grid[y].Columns[x]);
             }
         }
 
         this.weatherModel = new WeatherModel(region["reference city"]);
     }
 
-    calculateNodeSize(){
+    calculateTileSize(){
         let w = (window.innerWidth * 0.6) / this.columns;
         let h = (window.innerHeight * 0.8) / this.rows;
-        let nodeSize = h;
-        if(nodeSize > w) nodeSize = w;
-        nodeSize = Math.floor(nodeSize);
-        GridNodeModel.nodeSize = nodeSize
+        let tileSize = h;
+        if(tileSize > w) tileSize = w;
+        tileSize = Math.floor(tileSize);
+        TileModel.tileSize = tileSize;
     }
 
     getCurrentRegion(){
@@ -37,10 +37,10 @@ class GridModel {
     }
 
     drop(x, y, monster){
-        let nodeX = Math.floor(x / GridNodeModel.nodeSize);
-        let nodeY = Math.floor(y / GridNodeModel.nodeSize);
-        if(nodeX >= 0 && nodeX < this.columns && nodeY >= 0 && nodeY < this.rows){
-            this.grid[nodeY * this.columns + nodeX].placeMonster(monster);
+        let tileX = Math.floor(x / TileModel.tileSize);
+        let tileY = Math.floor(y /  TileModel.tileSize);
+        if(tileX >= 0 && tileX < this.columns && tileY >= 0 && tileY < this.rows){
+            this.grid[tileY * this.columns + tileX].placeMonster(monster);
             return true;
         }
         return false;

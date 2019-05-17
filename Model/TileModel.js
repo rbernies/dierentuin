@@ -1,14 +1,14 @@
-let nodeSize;
+let tileSize;
 
-class GridNodeModel {
+class TileModel {
 
     constructor(walkable){
         this.walkable = walkable;
         this.monster = null;
     }
 
-    static get nodeSize(){ return nodeSize; }
-    static set nodeSize(n){ nodeSize = n; }
+    static get tileSize(){ return tileSize; }
+    static set tileSize(n){ tileSize = n; }
 
     placeMonster(monster){
         this.monster = monster;

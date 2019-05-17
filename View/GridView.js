@@ -56,22 +56,22 @@ class GridView {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
 
-        this.controller.model.calculateNodeSize();
-        let nodeSize = GridNodeModel.nodeSize;
+        this.controller.model.calculateTileSize();
+        let tileSize = TileModel.tileSize;
 
-        this.canvas.width = this.columns *  nodeSize;
-        this.canvas.height = this.rows * nodeSize;
+        this.canvas.width = this.columns *  tileSize;
+        this.canvas.height = this.rows * tileSize;
 
         let grid = this.controller.model.grid;
         let image = this.controller.model.getNonWalkableImage();
 
         for(let y = 0; y < this.rows; y++){
             for(let x = 0; x < this.columns; x++){
-                this.g.strokeRect(x * nodeSize, y * nodeSize, nodeSize, nodeSize);
+                this.g.strokeRect(x * tileSize, y * tileSize, tileSize, tileSize);
                 if(grid[y * this.columns + x].isWalkable() > 0){
                     let img = new Image();
                     img.onload = () => {
-                        this.g.drawImage(img, x * nodeSize, y * nodeSize, nodeSize, nodeSize);
+                        this.g.drawImage(img, x * tileSize, y * tileSize, tileSize, tileSize);
                     }
                     img.src = image;
                 }
