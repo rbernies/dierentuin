@@ -15,11 +15,11 @@ class TileModel {
     }
 
     getMonster(){
-        return monster;
+        return this.monster;
     }
 
-    containsMonster(){
-        return (monster != null);
+    removeMonster(){
+        this.monster = null;
     }
 
     isWalkable(){

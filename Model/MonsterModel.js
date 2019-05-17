@@ -5,6 +5,6 @@ class MonsterModel {
     }
 
     getImage(){
-        return "resources/img/cactus.jpg";
+        return "resources/img/cactus.png";
     }
 }

@@ -41,14 +41,20 @@ class GridView {
             this.controller.changeRegion(sRegion.selectedIndex);
             this.resize();
         };
+
+        let rect = this.canvas.getBoundingClientRect();
+        this.drop(rect.left, rect.top, new MonsterModel());
     }
 
     drop(x, y, monster){
         let rect = this.canvas.getBoundingClientRect();
         x -= rect.left;
         y -= rect.top;
-        if(x <= rect.right && y <= rect.bottom)
-            return this.controller.model.drop(x, y, monster);
+        if(x <= rect.right && y <= rect.bottom){
+            let dropped = this.controller.model.drop(x, y, monster);
+            if(dropped) this.resize();
+            return dropped;
+        }
         return false;
     }
 
@@ -68,12 +74,22 @@ class GridView {
         for(let y = 0; y < this.rows; y++){
             for(let x = 0; x < this.columns; x++){
                 this.g.strokeRect(x * tileSize, y * tileSize, tileSize, tileSize);
+                
                 if(grid[y * this.columns + x].isWalkable() > 0){
                     let img = new Image();
                     img.onload = () => {
                         this.g.drawImage(img, x * tileSize, y * tileSize, tileSize, tileSize);
                     }
                     img.src = image;
+                }
+
+                let monster = grid[y * this.columns + x].getMonster();
+                if(monster){
+                    let img = new Image();
+                    img.onload = () => {
+                        this.g.drawImage(img, x * tileSize, y * tileSize, tileSize, tileSize);
+                    }
+                    img.src = monster.getImage();
                 }
             }
         }
