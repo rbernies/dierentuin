@@ -23,6 +23,7 @@ class ConfiguratorView {
     createNewDropDown(label, attribute) {
         if (attribute != null) {
             let selector = document.createElement("SELECT");
+            this.test += selector;
             selector.className = "form-control";
 
             let nameLabel = document.createElement("Label");
@@ -51,28 +52,8 @@ class ConfiguratorView {
         }
     }
 
-
-    createMonsterTypeSelector(monsterTypes) {
-        let monsterSelector = document.createElement("SELECT");
-        monsterSelector.className = "form-control";
-
-        let nameLabel = document.createElement("Label");
-        nameLabel.setAttribute("for", monsterSelector);
-        nameLabel.innerHTML = "Type of Monster";
-
-        this.monsterTypeSelectArea.appendChild(nameLabel);
-        this.monsterTypeSelectArea.appendChild(monsterSelector);
-
-        for (let i = 0; i < monsterTypes.length; i++) {
-            let list = document.createElement("option")
-            let option = document.createTextNode(monsterTypes[i]);
-            list.appendChild(option);
-            monsterSelector.appendChild(list);
-        }
-        monsterSelector.onchange = () => this.controller.startMonsterCreation(monsterSelector.value);
-    }
-
     updateConfigurator(monsterOptions) {
+        console.log(this.test[1].style.visibility = "hidden");
         // document.getElementById(monsterOptions.armAmount).selected = "true";
     }
 
