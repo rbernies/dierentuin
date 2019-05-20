@@ -17,11 +17,14 @@
     <script src="Model/Monsters/FireMonsterModel.js"></script>
     <script src="Model/Monsters/EarthMonsterModel.js"></script>
     <script src="Model/Monsters/WindMonsterModel.js"></script>
+    <script src="Model/Monsters/MonsterModel.js"></script>
+
 
     <script src="Model/Zoo/Regions.js"></script>
     <script src="Model/Zoo/GridModel.js"></script>
     <script src="Model/Zoo/GridNodeModel.js"></script>
     <script src="Model/Zoo/WeatherModel.js"></script>
+    <script src="Model/Zoo/TileModel.js"></script>
     <script src="View/GridView.js"></script>
     <script src="Controller/GridController.js"></script>
     <script src="Controller/Main.js" defer></script>
@@ -31,14 +34,16 @@
     <div class="modal-body row" id="container">
         <div class="col-md-3" id="editor">
             <form>
-            <h3>Monster Configurator</h3>
-            <div class="form-group" id="monsterTypeArea">
+                <h3>Monster Configurator</h3>
+                <div class="panel" id="configDiv">
+                    <div class="form-group" id="monsterTypeArea">
 
-            </div>
-            <div id="configuratorArea">
+                    </div>
+                    <div id="configuratorArea">
 
-            </div>
-        </form>
+                    </div>
+                </div>
+            </form>
         </div>
         <div class="col-md-9" id="zoo">
             <h3>Select Region:</h3>
