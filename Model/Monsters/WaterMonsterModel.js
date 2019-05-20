@@ -15,7 +15,7 @@ class WaterMonsterModel {
 
   updateMonster(option, value) {
     switch (option) {
-      case "armSelector":
+      case "armAmount":
         this.armAmount = value;
         if (value > 4) {
           this.legAmountOption = [0];
