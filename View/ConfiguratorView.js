@@ -23,7 +23,6 @@ class ConfiguratorView {
     createNewDropDown(label, attribute) {
         if (attribute != null) {
             let selector = document.createElement("SELECT");
-            this.test += selector;
             selector.className = "form-control";
 
             let nameLabel = document.createElement("Label");
@@ -44,16 +43,20 @@ class ConfiguratorView {
                 list.appendChild(option);
                 selector.appendChild(list);
             }
+              
+            this.test.push(selector);
             if (label === "Type of Monster") {
                 selector.onchange = () => this.controller.startMonsterCreation(selector.value);
             } else {
-                selector.onchange = () => this.controller.updateMonster(selector, selector.value);
+                selector.onchange = () => this.controller.updateMonster(label, selector.value);
             }
         }
     }
 
     updateConfigurator(monsterOptions) {
-        console.log(this.test[1].style.visibility = "hidden");
+        // console.log(monsterOptions);
+        // console.log(this.test[1]);
+        // console.log(this.test[1].options[this.test[1].selectedIndex].text);
         // document.getElementById(monsterOptions.armAmount).selected = "true";
     }
 
