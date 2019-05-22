@@ -1,4 +1,7 @@
-class DragAndDropController {
+import TileModel from "../Model/Zoo/TileModel.js"
+import MonsterModel from "../Model/Monsters/MonsterModel.js"
+
+export default class DragAndDropController {
     
     constructor(gridModel, gridView){
         this.gridModel = gridModel;
