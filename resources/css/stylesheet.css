@@ -12,6 +12,11 @@
     margin-top: 1%;
 }
 
+#monsterPreview {
+    border: 1px solid black;
+    height: 20%;
+}
+
 .panel{
     border: solid black 1px;
     margin-top: 2%;
@@ -25,4 +30,5 @@ canvas {
     max-width: 700px;
     margin: 0 auto;
     display: block;
+    z-index = 1;
 }

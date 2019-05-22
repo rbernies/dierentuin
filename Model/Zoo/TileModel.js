@@ -2,7 +2,8 @@ let tileSize;
 
 export default class TileModel {
 
-    constructor(walkable){
+    constructor(id, walkable){
+        this.id = id;
         this.walkable = walkable;
         this.monster = null;
     }
