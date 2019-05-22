@@ -1,2 +1,6 @@
-this.configuratorController = new ConfiguratorController();
-this.gridController = new GridController(0);
+import ConfiguratorController from "./ConfiguratorController"
+import GridController from "./GridController"
+
+
+const configuratorController = new ConfiguratorController();
+const gridController = new GridController(0);

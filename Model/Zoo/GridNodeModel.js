@@ -1,6 +1,6 @@
 let nodeSize;
 
-class GridNodeModel {
+export default class GridNodeModel {
 
     constructor(walkable){
         this.walkable = walkable;

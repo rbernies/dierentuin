@@ -1,4 +1,6 @@
-class WindMonsterModel {
+import MonsterModel from "./MonsterModel"
+
+export default class WindMonsterModel {
 
     constructor() {
         this.armTypeOption = ["wings", "claw-wings"];

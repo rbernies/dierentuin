@@ -1,4 +1,7 @@
-class GridView {
+import TileModel from "../Model/Zoo/TileModel"
+import MonsterModel from "../Model/Monsters/MonsterModel"
+
+export default class GridView {
 
     constructor(model){
         this.model = model;

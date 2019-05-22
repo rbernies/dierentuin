@@ -1,6 +1,6 @@
 let tileSize;
 
-class TileModel {
+export default class TileModel {
 
     constructor(id, walkable){
         this.id = id;

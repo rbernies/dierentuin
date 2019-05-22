@@ -1,4 +1,6 @@
-class WaterMonsterModel {
+import MonsterModel from "./MonsterModel"
+
+export default class WaterMonsterModel  {
 
   constructor() {
     this.armAmountOption = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -14,10 +16,13 @@ class WaterMonsterModel {
   }
 
   updateMonster(option, value) {
+    console.log(option);
     switch (option) {
-      case "armSelector":
+      case "armAmount":
+      console.log(value);
         this.armAmount = value;
         if (value > 4) {
+          console.log(" hi");
           this.legAmountOption = [0];
           this.legAmount = 0;
         } else {

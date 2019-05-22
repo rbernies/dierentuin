@@ -1,4 +1,6 @@
-class FireMonsterModel {
+import MonsterModel from "./MonsterModel"
+
+export default class FireMonsterModel {
 
     constructor() {
         this.armAmountOption = [1, 2, 3, 4, 5, 6];
@@ -14,7 +16,7 @@ class FireMonsterModel {
 
     updateMonster(option, value) {
         switch (option) {
-            case "armSelector":
+            case "armAmount":
                 this.armAmount = value;
                 if (value > 2) {                
                     this.legAmount = 0;

@@ -1,4 +1,6 @@
-class EarthMonsterModel {
+import MonsterModel from "./MonsterModel"
+
+export default class EarthMonsterModel {
 
     constructor() {
         this.legAmountOption = [2, 4, 6];
