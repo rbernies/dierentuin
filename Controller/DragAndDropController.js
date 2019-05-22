@@ -16,8 +16,6 @@ export default class DragAndDropController {
         this.monsterPreview.addEventListener("dragover", (event) => { this.allowDrop(event); });
         this.monster.addEventListener("dragstart", (event) => { this.drag(event, new MonsterModel()); });
 
-        this.idCount = 0;
-
         let tileSize = TileModel.tileSize;
         this.monster.style.width = tileSize * this.gridModel.scale + "px";
         this.monster.style.height = tileSize * this.gridModel.scale + "px";
@@ -52,25 +50,30 @@ export default class DragAndDropController {
             img.zIndex = 10;
             img.id = "monsterImage";
             img.addEventListener("dragstart", (event) => { this.drag(event, monster); }, false);
-            img.addEventListener("dragend", (event) => { this.dragEnd(event, tile, monster); });
+            let self = this;
+            this.dragEndListener = this.dragEnd(event, self, tile, monster);
+            img.addEventListener("dragend", this.dragEndListener);
             img.src = monster.getImage();
+            this.gridModel.grid[tile.id].removeMonster();
             document.body.appendChild(img);
-            tile.removeMonster();
             this.gridView.resize();
         }
     }
 
-    dragEnd(ev, tile, monster){
+    dragEnd(ev, self, tile, monster){
         console.log("DRAGEND - REMOVE monsterImage");
-        let elem = document.getElementById("monsterImage");
         let mmonster = MonsterModel.createMonsterFromJson(monster);
-        if(elem) elem.remove();
         tile.placeMonster(mmonster);
-        this.gridView.resize();
+        self.gridView.resize();
     }
 
     drop(ev){
         console.log("DROP");
+        let mi = document.getElementById("monsterImage");
+        if(mi) {
+            console.log("remove event listener");
+            mi.removeEventListener("dragend", this.dragEndListener);
+        }
         let elem = document.getElementById(ev.dataTransfer.getData("text"));
         let monster = MonsterModel.createMonsterFromJson(ev.dataTransfer.getData("monster"));
 
@@ -86,7 +89,7 @@ export default class DragAndDropController {
             }
         }else if(!(elem.id == "monster" && ev.target.id == "monsterPreview")){
             this.monster.src = elem.src;
-            if(elem) elem.remove();
         }
+        if(elem && elem.id != "monster") elem.remove();
     }
 }

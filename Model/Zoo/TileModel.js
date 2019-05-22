@@ -21,6 +21,7 @@ export default class TileModel {
 
     removeMonster(){
         this.monster = null;
+        console.log("remove monster " + this.id);
     }
 
     isWalkable(){

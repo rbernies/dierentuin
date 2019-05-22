@@ -1,5 +1,4 @@
 import TileModel from "../Model/Zoo/TileModel"
-import MonsterModel from "../Model/Monsters/MonsterModel"
 
 export default class GridView {
 
@@ -45,7 +44,6 @@ export default class GridView {
     }
 
     resize() {
-        console.log("RESIZE");
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
 
