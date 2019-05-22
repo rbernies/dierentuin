@@ -15,14 +15,12 @@ export default class WaterMonsterModel  {
     this.canSwim = true;
   }
 
-  updateMonster(option, value) {
-    console.log(option);
-    switch (option) {
+  updateMonster(id, value) {
+    console.log(id);
+    switch (id) {
       case "armAmount":
-      console.log(value);
         this.armAmount = value;
         if (value > 4) {
-          console.log(" hi");
           this.legAmountOption = [0];
           this.legAmount = 0;
         } else {
@@ -34,12 +32,16 @@ export default class WaterMonsterModel  {
         break;
       case "legAmount":
         this.legAmount = value;
+        break;
       case "eyeAmount":
         this.eyeAmount = value;
+        break;
       case "furType":
         this.fur = value;
+        break;
       case "color":
         this.color = value;
+        break;
       default:
         return null;
     }

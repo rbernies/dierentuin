@@ -14,8 +14,10 @@ export default class ConfiguratorController {
         this.view.startMonsterCreator(this.model.getMonsterOptions(monsterType));
     }
 
-    updateMonster(option, value){
-        this.model.newMonster.updateMonster(option, value);
-        this.view.updateConfigurator(this.model.newMonster);
+    updateMonster(selector){
+        console.log(selector.value);
+        console.log(selector.id);
+        this.model.newMonster.updateMonster(selector.id, selector.value);
+        this.view.updateConfigurator(this.model.newMonster, selector);
     }
 }
