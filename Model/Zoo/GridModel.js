@@ -6,6 +6,7 @@ class GridModel {
         this.rows = 10;
         this.grid = [];
         this.regions = JSON.parse(regionData);
+        this.scale = 0;
         this.loadRegion(regionId);
     }
     
@@ -16,7 +17,7 @@ class GridModel {
         this.rows = region.grid.length;
         for(let y = 0; y < this.rows; y++){
             for(let x = 0; x < this.columns; x++){
-                this.grid[y * this.columns + x] = new TileModel(region.grid[y].Columns[x]);
+                this.grid[y * this.columns + x] = new TileModel(y * this.columns + x, region.grid[y].Columns[x]);
             }
         }
 
@@ -37,8 +38,9 @@ class GridModel {
     }
 
     drop(x, y, monster){
-        let tileX = Math.floor(x / TileModel.tileSize);
-        let tileY = Math.floor(y /  TileModel.tileSize);
+        let tileSize = TileModel.tileSize;
+        let tileX = Math.floor(x / tileSize);
+        let tileY = Math.floor(y /  tileSize);
         if(tileX >= 0 && tileX < this.columns && tileY >= 0 && tileY < this.rows){
             this.grid[tileY * this.columns + tileX].placeMonster(monster);
             return true;
@@ -46,8 +48,24 @@ class GridModel {
         return false;
     }
 
+    getTile(x, y){
+        let tileSize = TileModel.tileSize;
+        let tileX = Math.floor(x / tileSize);
+        let tileY = Math.floor(y /  tileSize);
+        return this.grid[tileY * this.columns + tileX];
+    }
+
     getNonWalkableImage(){
         return this.getCurrentRegion()["non-walkable-image"];
+    }
+
+    changeRegion(regionId){
+        this.regionId = regionId;
+        this.loadRegion();
+    }
+
+    getRegions(){
+        return this.regions;
     }
 
 }
