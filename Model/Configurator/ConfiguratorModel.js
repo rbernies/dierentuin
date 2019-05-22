@@ -1,4 +1,10 @@
-class ConfiguratorModel {
+import WaterMonsterModel from "../Monsters/WaterMonsterModel"
+import FireMonsterModel from "../Monsters/FireMonsterModel"
+import EarthMonsterModel from "../Monsters/EarthMonsterModel"
+import WindMonsterModel from "../Monsters/WindMonsterModel"
+
+
+export default class ConfiguratorModel {
 
 
     getMonsterTypes() {

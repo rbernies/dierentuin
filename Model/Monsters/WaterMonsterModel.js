@@ -1,4 +1,6 @@
-class WaterMonsterModel  {
+import MonsterModel from "./MonsterModel"
+
+export default class WaterMonsterModel  {
 
   constructor() {
     this.armAmountOption = [1, 2, 3, 4, 5, 6, 7, 8];

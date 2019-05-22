@@ -1,4 +1,4 @@
-class ConfiguratorView {
+export default class ConfiguratorView {
 
     constructor(controller, monsterTypes) {
         this.controller = controller;

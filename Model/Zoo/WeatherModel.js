@@ -1,4 +1,4 @@
-class WeatherModel {
+export default class WeatherModel {
 
     constructor(country) {
         const APPID = "5ce98ff491403bc50cc78dc29975e9e4";

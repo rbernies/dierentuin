@@ -1,4 +1,7 @@
-class GridModel {
+import WeatherModel from "./WeatherModel"
+import TileModel from "./TileModel"
+
+export default class GridModel {
     
     constructor(regionId){
         this.regionId = regionId;
@@ -51,3 +54,4 @@ class GridModel {
     }
 
 }
+

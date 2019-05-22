@@ -1,4 +1,4 @@
-class MonsterModel {
+export default class MonsterModel {
 
     constructor(){
         this.armAmountOption;

@@ -1,4 +1,8 @@
-class ConfiguratorController {
+import ConfiguratorModel  from "../Model/Configurator/ConfiguratorModel"
+import ConfiguratorView from "../View/ConfiguratorView"
+
+
+export default class ConfiguratorController {
 
     constructor() {
         this.model = new ConfiguratorModel();
