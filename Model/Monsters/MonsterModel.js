@@ -8,6 +8,8 @@ export default class MonsterModel {
         this.furOption;
         this.colorOption;
     
+        this.monsterType;
+        this.test;
         this.armAmount;
         this.armType;
         this.legAmount;

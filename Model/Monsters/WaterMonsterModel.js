@@ -1,6 +1,6 @@
 import MonsterModel from "./MonsterModel"
 
-export default class WaterMonsterModel  {
+export default class WaterMonsterModel {
 
   constructor() {
     this.armAmountOption = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -10,14 +10,17 @@ export default class WaterMonsterModel  {
     this.furOption = ["scales", "slime"];
     this.colorOption = ["blue", "red", "green"];
 
+    this.monsterName = "";
+    this.monsterType = "Water Monster";
     this.armAmount = 8;
     this.canFly = false;
     this.canSwim = true;
   }
 
   updateMonster(id, value) {
-    console.log(id);
     switch (id) {
+      case "monsterName":
+        this.monsterName = value;
       case "armAmount":
         this.armAmount = value;
         if (value > 4) {
@@ -26,22 +29,19 @@ export default class WaterMonsterModel  {
         } else {
           this.legAmountOption = [1, 2, 3, 4];
         }
-        break;
       case "armType":
         this.armType = value;
-        break;
       case "legAmount":
         this.legAmount = value;
-        break;
       case "eyeAmount":
         this.eyeAmount = value;
-        break;
       case "furType":
         this.fur = value;
-        break;
       case "color":
         this.color = value;
-        break;
+      case "monsterImage":
+        this.monsterImage = value;
+        console.log(this.monsterImage);
       default:
         return null;
     }

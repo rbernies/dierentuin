@@ -9,24 +9,26 @@ export default class FireMonsterModel {
         this.furOption = ["scales", "feathers"];
         this.colorOption = ["red", "orange", "brown"];
 
+        this.monsterName = "";
+        this.monsterType = "Fire Monster";
         this.legAmount = 2;
         this.canFly = false;
         this.canSwim = false;
     }
 
-    updateMonster(option, value) {
-        switch (option) {
+    updateMonster(id, value) {
+        switch (id) {
+            case "monsterName":
+                this.monsterName = value;
             case "armAmount":
                 this.armAmount = value;
-                if (value > 2) {                
+                if (value > 2) {
                     this.legAmount = 0;
                 } else {
                     this.legAmount = 2;
                 }
-                break;
             case "armType":
                 this.armType = value;
-                break;
             case "eyeAmount":
                 this.eyeAmount = value;
             case "furType":
@@ -38,6 +40,8 @@ export default class FireMonsterModel {
                 this.fur = value;
             case "color":
                 this.color = value;
+            case "monsterImage":
+                this.monsterImage = value;
             default:
                 return null;
         }

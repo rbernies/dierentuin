@@ -16,7 +16,6 @@ export default class ConfiguratorController {
 
     updateMonster(selector){
         console.log(selector.value);
-        console.log(selector.id);
         this.model.newMonster.updateMonster(selector.id, selector.value);
         this.view.updateConfigurator(this.model.newMonster, selector);
     }

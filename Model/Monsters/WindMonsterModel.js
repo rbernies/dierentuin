@@ -8,17 +8,20 @@ export default class WindMonsterModel {
         this.furOption = ["feathers", "hair", "scales"];
         this.colorOption = ["white", "blue", "purple"];
 
+        this.monsterName = "";
+        this.monsterType = "Wind Monster";
         this.armAmount = 2;
         this.eyeAmount = 2;
         this.canFly = true;
         this.canSwim = true;
     }
 
-    updateMonster(option, value) {
-        switch (option) {
+    updateMonster(id, value) {
+        switch (id) {
+            case "monsterName":
+                this.monsterName = value;
             case "armType":
                 this.armType = value;
-                break;
             case "legAmount":
                 this.legAmount = value;
             case "furType":
@@ -30,6 +33,8 @@ export default class WindMonsterModel {
                 this.fur = value;
             case "color":
                 this.color = value;
+            case "monsterImage":
+                this.monsterImage = value;
             default:
                 return null;
         }

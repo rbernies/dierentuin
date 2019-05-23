@@ -7,6 +7,8 @@ export default class EarthMonsterModel {
         this.furOption = ["hair", "scales", "slime"];
         this.colorOption = ["purple", "orange", "white"];
 
+        this.monsterName = "";
+        this.monsterType = "Earth Monster";
         this.armAmount = 2;
         this.armType = "claws";
         this.eyeAmount = 2;
@@ -14,14 +16,18 @@ export default class EarthMonsterModel {
         this.canSwim = false;
     }
 
-    updateMonster(option, value) {
-        switch (option) {
+    updateMonster(id, value) {
+        switch (id) {
+            case "monsterName":
+                this.monsterName = value;
             case "legAmount":
                 this.legAmount = value;
             case "furType":
                 this.fur = value;
             case "color":
                 this.color = value;
+            case "monsterImage":
+                this.monsterImage = value;
             default:
                 return null;
         }
