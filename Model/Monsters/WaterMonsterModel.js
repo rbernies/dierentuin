@@ -41,7 +41,6 @@ export default class WaterMonsterModel {
         this.color = value;
       case "monsterImage":
         this.monsterImage = value;
-        console.log(this.monsterImage);
       default:
         return null;
     }
