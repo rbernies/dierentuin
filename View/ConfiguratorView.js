@@ -6,8 +6,7 @@ export default class ConfiguratorView {
         this.configuratorDiv = document.getElementById("configuratorArea");
         this.monsterTypeSelectArea = document.getElementById("monsterTypeArea");
         this.monsterPreview = document.getElementById("monsterPreview");
-        this.createNewDropDown("monsterType", "Type of Monster", monsterTypes);
-        this.createNameField();
+        this.createNewDropDown("Type of Monster", monsterTypes);
         this.createMonsterImageUploader();
     }
 
@@ -18,36 +17,38 @@ export default class ConfiguratorView {
         let nameLabel = document.createElement("Label");
         nameLabel.setAttribute("for", inputField);
         nameLabel.innerHTML = "Name your new monster";
-        this.monsterTypeSelectArea.appendChild(nameLabel);
-        this.monsterTypeSelectArea.appendChild(inputField);    
+        inputField.onchange= () => this.controller.updateMonster(inputField);
+        this.configuratorDiv.appendChild(nameLabel);
+        this.configuratorDiv.appendChild(inputField);    
     }
 
-    startMonsterCreator(monsterOptions) {
+    drawNextInputField(){
+        if(this.monsterOptions.length != 0){
+        let element = this.monsterOptions.shift();
+        let key = Object.keys(element);
+        let value = element[key];
+        this.createNewDropDown(key.toString(), value);
+        }
+    }
+
+    loadMonsterOptions(monsterOptions) {
         this.resetMonsterCreator();
         this.monsterOptions = monsterOptions;
-        
-        
-        this.createNewDropDown("armAmount", "Amount of Arms", this.monsterOptions.armAmountOption);
-        this.createNewDropDown("armType", "Type of Arms", this.monsterOptions.armTypeOption);
-        this.createNewDropDown("legAmount", "Amount of Legs", this.monsterOptions.legAmountOption);
-        this.createNewDropDown("eyeAmount", "Amount of Eyes", this.monsterOptions.eyeAmountOption);
-        this.createNewDropDown("furType", "Type of Fur", this.monsterOptions.furOption);
-        this.createNewDropDown("color", "Color your Monster", this.monsterOptions.colorOption);
+        this.createNameField();
     }
 
-    createNewDropDown(id, label, value) {
+    createNewDropDown(label, value) {
         if (value != null) {
-            console.log(value.length)
             let selector = document.createElement("SELECT");
             selector.className = "form-control";
-            selector.setAttribute("id", id);
+            selector.setAttribute("id", label);
             
             let nameLabel = document.createElement("Label");
             nameLabel.setAttribute("for", selector);
-            nameLabel.setAttribute("id", id+"Label");
+            nameLabel.setAttribute("id", label+"Label");
             nameLabel.innerHTML = label;
 
-            if (id === "monsterType") {
+            if (label === "Type of Monster") {
                 this.monsterTypeSelectArea.appendChild(nameLabel);
                 this.monsterTypeSelectArea.appendChild(selector);
             } else {
@@ -62,36 +63,31 @@ export default class ConfiguratorView {
                 selector.appendChild(list);
             }
               
-            if (id === "monsterType") {
-                selector.onchange = () => this.controller.startMonsterCreation(selector.value);
-            } else {
-                selector.onchange = () => this.controller.updateMonster(selector);
+            if (label === "Type of Monster") {
+                selector.onchange = () => this.controller.startMonsterCreation(selector.value);}
+            //  else if(label ==="Amount of Arms" && this.monsterType === "Water") {
+            //     selector.onchange = () => this.adjustLegSelector(selector);} 
+                else if(label != "Type of Monster") {
+                 selector.onchange = () => this.controller.updateMonster(selector);
             }
-
             selector.value = "";
         }
     }
-
-    updateConfigurator(monsterOptions, selector) {
     
+   
+    adjustLegSelector(selector) {
+    // if(selector.value > 4){
+    //     document.getElementById("Amount of Legs").style.visibility = "hidden";
+    //     document.getElementById("Amount of LegsLabel").style.visibility = "hidden";
+
+    // } else {
+    //     document.getElementById("Amount of LegsLabel").style.visibility = "visible";
+    //     document.getElementById("Amount of Legs").style.visibility = "visible";
+    // }
     }
 
-    adjustLegOptions(monsterOptions){
-        let legSelector = document.getElementById("legAmount");
-        while(legSelector.firstChild){              
-            legSelector.removeChild(legSelector.firstChild);
-        }
-
-        for (let i = 0; i < monsterOptions.legAmountOption.length; i++) {
-            let list = document.createElement("option")
-            let option = document.createTextNode(monsterOptions.legAmountOption[i]);
-            list.appendChild(option);
-            legSelector.appendChild(list);
-        }
-    }
 
     resetMonsterCreator() {
-        document.getElementById("monsterName").value = "";
         while (this.configuratorDiv.firstChild) {
             this.configuratorDiv.removeChild(this.configuratorDiv.firstChild);
         }

@@ -9,12 +9,12 @@ export default class ConfiguratorController {
     }
 
     startMonsterCreation(monsterType) {
-        this.monsterController.monsterOptions.setMonsterOptions(monsterType);
-        this.view.startMonsterCreator(this.monsterController.monsterOptions);
+         this.view.loadMonsterOptions(this.monsterController.monsterOptions.getMonsterOptions(monsterType));
+         this.monsterController.createNewMonster(monsterType);
     }
 
     updateMonster(selector){
-        this.model.newMonster.updateMonster(selector.id, selector.value);
-        this.view.updateConfigurator(this.model.newMonster.monsterOptions, selector);
+        this.monsterController.updateMonster(selector.id, selector.value);
+        this.view.drawNextInputField();
     }
 }
