@@ -11,25 +11,6 @@
 
     <script src="Model/Zoo/Regions.js"></script>
     <link rel="stylesheet" href="Resources/css/stylesheet.css" type="text/css">
-    <!-- <script src="View/ConfiguratorView.js"></script>
-    <script src="Controller/ConfiguratorController.js"></script>
-    <script src="Model/Configurator/ConfiguratorModel.js"></script>
-
-    <script src="Model/Monsters/WaterMonsterModel.js"></script>
-    <script src="Model/Monsters/FireMonsterModel.js"></script>
-    <script src="Model/Monsters/EarthMonsterModel.js"></script>
-    <script src="Model/Monsters/WindMonsterModel.js"></script>
-    <script src="Model/Monsters/MonsterModel.js"></script>
-
-
-    <script src="Model/Zoo/GridModel.js"></script>
-    <script src="Model/Zoo/GridNodeModel.js"></script>
-    <script src="Model/Zoo/WeatherModel.js"></script>
-    <script src="Model/Zoo/TileModel.js"></script>
-    <script src="View/GridView.js"></script>
-    <script src="Controller/DragAndDropController.js"></script>
-    <script src="Controller/GridController.js"></script>
-    <script src="Controller/Main.js" defer></script> -->
     <script src="dist/bundle.js" defer></script>
 </head>
 
@@ -51,11 +32,11 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-9" id="zoo">
-            <h3>Select Region:</h3>
+        <div class="col-md-5" id="zoo">
+            <h3 id="select-text">Select Region:</h3>
             <select id="region-select"></select>
             <div class="panel">
-                <canvas></canvas>
+                <div class="grid"></div>
             </div>
         </div>
     </div>

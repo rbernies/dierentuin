@@ -1,12 +1,18 @@
 import GridModel from "../Model/Zoo/GridModel"
 import GridView from "../View/GridView"
-import DragAndDropController from "../Controller/DragAndDropController.js"
 
 export default class GridController {
 
     constructor(regionId){
         this.model = new GridModel(regionId);
-        this.view = new GridView(this.model);
-        this.dragAndDropController = new DragAndDropController(this.model, this.view);
+        this.view = new GridView(this);
+    }
+
+    getModel(){
+        return this.model;
+    }
+
+    changeRegion(regionId){
+        this.model.changeRegion(regionId);
     }
 }
