@@ -44,6 +44,7 @@ export default class GridView {
             let region = this.controller.getModel().getCurrentRegion();
             if(region.grid[y].Columns[x] == 1){
                 let img = document.createElement("img");
+                img.className = "tile";
                 img.src = this.controller.getModel().getNonWalkableImage();
                 div.appendChild(img);
             }
