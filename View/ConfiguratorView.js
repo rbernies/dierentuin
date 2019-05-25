@@ -1,13 +1,21 @@
 export default class ConfiguratorView {
 
     constructor(controller, monsterTypes) {
+        this.fileChooserVisible = false;
+        this.saveMonsterButtonVisible = false;
         this.controller = controller;
         this.monsterTypes = monsterTypes;
-        this.configuratorDiv = document.getElementById("configuratorArea");
         this.monsterTypeSelectArea = document.getElementById("monsterTypeArea");
-        this.monsterPreview = document.getElementById("monsterPreview");
+        this.configuratorDiv = document.getElementById("configuratorArea");
+        this.imageChooserDiv = document.getElementById("imageChooser");
+        this.monsterPreviewDiv = document.getElementById("monsterPreview");
         this.createNewDropDown("Type of Monster", monsterTypes);
-        this.createMonsterImageUploader();
+    }
+
+    loadMonsterOptions(monsterOptions) {
+        this.resetMonsterCreator();
+        this.monsterOptions = monsterOptions;
+        this.createNameField();
     }
 
     createNameField() {
@@ -17,35 +25,66 @@ export default class ConfiguratorView {
         let nameLabel = document.createElement("Label");
         nameLabel.setAttribute("for", inputField);
         nameLabel.innerHTML = "Name your new monster";
-        inputField.onchange= () => this.controller.updateMonster(inputField);
+        inputField.onchange = () => this.controller.updateMonster(inputField);
         this.configuratorDiv.appendChild(nameLabel);
-        this.configuratorDiv.appendChild(inputField);    
+        this.configuratorDiv.appendChild(inputField);
     }
 
-    drawNextInputField(){
-        if(this.monsterOptions.length != 0){
-        let element = this.monsterOptions.shift();
-        let key = Object.keys(element);
-        let value = element[key];
-        this.createNewDropDown(key.toString(), value);
+    drawNextInputField() {
+        let last = false;
+        if (this.monsterOptions.length == 1) {
+            last = true;
+        }
+        if (this.monsterOptions.length != 0) {
+            let element = this.monsterOptions.shift();
+            let key = Object.keys(element);
+            let value = element[key];
+            this.createNewDropDown(key.toString(), value, last);
         }
     }
 
-    loadMonsterOptions(monsterOptions) {
-        this.resetMonsterCreator();
-        this.monsterOptions = monsterOptions;
-        this.createNameField();
+    createMonsterImageUploader(selector) {
+        this.controller.updateMonster(selector);
+
+        if (!this.fileChooserVisible) {
+            let monsterImage = document.createElement("input");
+            monsterImage.setAttribute("id", "monsterImage");
+            monsterImage.setAttribute("type", "file");
+            let nameLabel = document.createElement("Label");
+            nameLabel.setAttribute("for", monsterImage);
+            nameLabel.innerHTML = "Upload your Monster";
+            monsterImage.onchange = () => this.drawSaveMonsterButton(monsterImage);
+            this.imageChooserDiv.appendChild(nameLabel);
+            this.imageChooserDiv.appendChild(monsterImage);
+            this.fileChooserVisible = true;
+        }
     }
 
-    createNewDropDown(label, value) {
+    drawSaveMonsterButton(monsterImage) {
+        this.controller.updateMonster(monsterImage);
+
+        if (!this.saveMonsterButtonVisible) {
+            let button = document.createElement("button");
+            button.type = "button";
+            button.className = "btn btn-primary";
+            button.appendChild(document.createTextNode("Make my Beast!"));
+            button.onclick = () => this.controller.saveMonster();
+            this.monsterPreviewDiv.appendChild(button);
+            this.saveMonsterButtonVisible = true;
+        }
+
+
+    }
+
+    createNewDropDown(label, value, lastElement) {
         if (value != null) {
             let selector = document.createElement("SELECT");
             selector.className = "form-control";
             selector.setAttribute("id", label);
-            
+
             let nameLabel = document.createElement("Label");
             nameLabel.setAttribute("for", selector);
-            nameLabel.setAttribute("id", label+"Label");
+            nameLabel.setAttribute("id", label + "Label");
             nameLabel.innerHTML = label;
 
             if (label === "Type of Monster") {
@@ -62,28 +101,32 @@ export default class ConfiguratorView {
                 list.appendChild(option);
                 selector.appendChild(list);
             }
-              
-            if (label === "Type of Monster") {
-                selector.onchange = () => this.controller.startMonsterCreation(selector.value);}
+            if (lastElement) {
+                selector.onchange = () => this.createMonsterImageUploader(selector);;
+            }
+
+            else if (label === "Type of Monster") {
+                selector.onchange = () => this.controller.startMonsterCreation(selector.value);
+            }
             //  else if(label ==="Amount of Arms" && this.monsterType === "Water") {
             //     selector.onchange = () => this.adjustLegSelector(selector);} 
-                else if(label != "Type of Monster") {
-                 selector.onchange = () => this.controller.updateMonster(selector);
+            else if (label != "Type of Monster") {
+                selector.onchange = () => this.controller.updateMonster(selector);
             }
             selector.value = "";
         }
     }
-    
-   
-    adjustLegSelector(selector) {
-    // if(selector.value > 4){
-    //     document.getElementById("Amount of Legs").style.visibility = "hidden";
-    //     document.getElementById("Amount of LegsLabel").style.visibility = "hidden";
 
-    // } else {
-    //     document.getElementById("Amount of LegsLabel").style.visibility = "visible";
-    //     document.getElementById("Amount of Legs").style.visibility = "visible";
-    // }
+
+    adjustLegSelector(selector) {
+        // if(selector.value > 4){
+        //     document.getElementById("Amount of Legs").style.visibility = "hidden";
+        //     document.getElementById("Amount of LegsLabel").style.visibility = "hidden";
+
+        // } else {
+        //     document.getElementById("Amount of LegsLabel").style.visibility = "visible";
+        //     document.getElementById("Amount of Legs").style.visibility = "visible";
+        // }
     }
 
 
@@ -91,17 +134,11 @@ export default class ConfiguratorView {
         while (this.configuratorDiv.firstChild) {
             this.configuratorDiv.removeChild(this.configuratorDiv.firstChild);
         }
-    }
-
-    createMonsterImageUploader(){
-        let monsterImage = document.createElement("input");
-        monsterImage.setAttribute("id", "monsterImage");
-        monsterImage.setAttribute("type", "file");
-        let nameLabel = document.createElement("Label");
-        nameLabel.setAttribute("for", monsterImage);
-        nameLabel.innerHTML = "Upload your Monster";
-        monsterImage.onchange = () => this.controller.updateMonster(monsterImage);
-        this.monsterPreview.appendChild(nameLabel);
-        this.monsterPreview.appendChild(monsterImage);
+        while (this.imageChooserDiv.firstChild) {
+            this.imageChooserDiv.removeChild(this.imageChooserDiv.firstChild);
+        }
+        while (this.monsterPreviewDiv.firstChild) {
+            this.monsterPreviewDiv.removeChild(this.monsterPreviewDiv.firstChild);
+        }
     }
 }

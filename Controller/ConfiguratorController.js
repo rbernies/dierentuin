@@ -5,16 +5,20 @@ export default class ConfiguratorController {
 
     constructor(monsterController) {
         this.monsterController = monsterController;
-        this.view = new ConfiguratorView(this, this.monsterController.monsterOptions.monsterTypes);
+        this.view = new ConfiguratorView(this, this.monsterController.monsterTypes);
     }
 
     startMonsterCreation(monsterType) {
-         this.view.loadMonsterOptions(this.monsterController.monsterOptions.getMonsterOptions(monsterType));
-         this.monsterController.createNewMonster(monsterType);
+        this.monsterController.createNewMonster(monsterType);
+        this.view.loadMonsterOptions(this.monsterController.newMonster.monsterOptions);
     }
 
-    updateMonster(selector){
+    updateMonster(selector) {
         this.monsterController.updateMonster(selector.id, selector.value);
         this.view.drawNextInputField();
+    }
+
+    saveMonster() {
+        this.monsterController.saveMonster();
     }
 }
