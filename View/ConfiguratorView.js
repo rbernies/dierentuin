@@ -9,6 +9,7 @@ export default class ConfiguratorView {
         this.configuratorDiv = document.getElementById("configuratorArea");
         this.imageChooserDiv = document.getElementById("imageChooser");
         this.monsterPreviewDiv = document.getElementById("monsterPreview");
+        this.drawnElements = [];
         this.createNewDropDown("Type of Monster", monsterTypes);
     }
 
@@ -37,7 +38,14 @@ export default class ConfiguratorView {
         }
     }
 
-    drawNextInputField() {
+    drawNextInputField(selectorid) {
+        //check if next input field of element has not already been drawn
+        for(let id in this.drawnElements){
+            if(this.drawnElements[id] == selectorid){
+                return;
+            }
+        }
+
         let last = false;
         if (this.monsterOptions.length == 1) {
             last = true;
@@ -48,6 +56,7 @@ export default class ConfiguratorView {
             let value = element[key];
             this.createNewDropDown(key.toString(), value, last);
         }
+        this.drawnElements.push(selectorid);
     }
 
     createMonsterImageUploader(selector) {

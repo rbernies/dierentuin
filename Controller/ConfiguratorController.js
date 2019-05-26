@@ -15,7 +15,7 @@ export default class ConfiguratorController {
 
     updateMonster(selector) {
         this.monsterController.updateMonster(selector.id, selector.value);
-        this.view.drawNextInputField();
+        this.view.drawNextInputField(selector.id);
     }
 
     saveMonster() {
