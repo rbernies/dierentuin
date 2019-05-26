@@ -38,7 +38,7 @@ export default class WaterMonsterModel extends MonsterProperties {
                 this.eyeAmount = value;
                 break;
             case "Type of Fur":
-                this.fur = value;
+                this.furType = value;
                 break;
             case "Color":
                 this.color = value;

@@ -8,7 +8,6 @@ export default class ConfiguratorView {
         this.monsterTypeSelectArea = document.getElementById("monsterTypeArea");
         this.configuratorDiv = document.getElementById("configuratorArea");
         this.imageChooserDiv = document.getElementById("imageChooser");
-        this.monsterPreviewDiv = document.getElementById("monsterPreview");
         this.drawnElements = [];
         this.createNewDropDown("Type of Monster", monsterTypes);
     }
@@ -78,18 +77,15 @@ export default class ConfiguratorView {
 
     drawSaveMonsterButton(monsterImage) {
         this.controller.updateMonster(monsterImage);
-
         if (!this.saveMonsterButtonVisible) {
             let button = document.createElement("button");
             button.type = "button";
             button.className = "btn btn-primary";
             button.appendChild(document.createTextNode("Make my Beast!"));
             button.onclick = () => this.controller.saveMonster();
-            this.monsterPreviewDiv.appendChild(button);
+            this.imageChooserDiv.appendChild(button);
             this.saveMonsterButtonVisible = true;
         }
-
-
     }
 
     createNewDropDown(label, value, lastElement) {
@@ -133,7 +129,6 @@ export default class ConfiguratorView {
         }
     }
 
-
     adjustLegSelector(selector) {
         let legSelector = document.getElementById("Amount of Legs");
         if(legSelector == null){
@@ -147,16 +142,15 @@ export default class ConfiguratorView {
         this.controller.updateMonster(selector);
     }
 
-
     resetMonsterCreator() {
+        this.drawnElements = [];
+        this.fileChooserVisible = false;
+        this.saveMonsterButtonVisible = false;
         while (this.configuratorDiv.firstChild) {
             this.configuratorDiv.removeChild(this.configuratorDiv.firstChild);
         }
         while (this.imageChooserDiv.firstChild) {
             this.imageChooserDiv.removeChild(this.imageChooserDiv.firstChild);
-        }
-        while (this.monsterPreviewDiv.firstChild) {
-            this.monsterPreviewDiv.removeChild(this.monsterPreviewDiv.firstChild);
         }
     }
 }

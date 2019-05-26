@@ -39,7 +39,7 @@ export default class FireMonsterModel extends MonsterProperties {
                 } else {
                     this.canFly = false;
                 }
-                this.fur = value;
+                this.furType = value;
                 break;
             case "Color":
                 this.color = value;

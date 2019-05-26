@@ -9,6 +9,7 @@ export default class EarthMonsterModel extends MonsterProperties {
         this.monsterOptions.push({ "Type of Fur": ["hair", "scales", "slime"] });
         this.monsterOptions.push({ "Color": ["purple", "orange", "white"] });
 
+        this.monsterType = "Earth";
         this.armAmount = 2;
         this.armType = "claws";
         this.eyeAmount = 2;
@@ -23,10 +24,10 @@ export default class EarthMonsterModel extends MonsterProperties {
                 this.legAmount = value;
                 break;
             case "Type of Fur":
-                this.fur = value;
+                this.furType = value;
                 break;
             case "Color":
-                this.Color = value;
+                this.color = value;
                 break;
             case "monsterImage":
                 this.image = value;

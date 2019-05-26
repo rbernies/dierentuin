@@ -20,5 +20,6 @@ export default class ConfiguratorController {
 
     saveMonster() {
         this.monsterController.saveMonster();
+        this.view.resetMonsterCreator();
     }
 }

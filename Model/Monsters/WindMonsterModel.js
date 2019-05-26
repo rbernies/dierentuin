@@ -10,6 +10,7 @@ export default class WindMonsterModel extends MonsterProperties {
         this.monsterOptions.push({ "Type of Fur": ["feather", "hair", "scales"] });
         this.monsterOptions.push({ "Color": ["white", "blue", "purple"] });
 
+        this.monsterType = "Wind";
         this.armAmount = 2;
         this.eyeAmount = 2;
         this.canFly = true;
@@ -32,7 +33,7 @@ export default class WindMonsterModel extends MonsterProperties {
                 } else {
                     this.canFly = true;
                 }
-                this.fur = value;
+                this.furType = value;
                 break;
             case "Color":
                 this.color = value;
