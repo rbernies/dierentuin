@@ -12,8 +12,9 @@ export default class ConfiguratorView {
         this.createNewDropDown("Type of Monster", monsterTypes);
     }
 
-    loadMonsterOptions(monsterOptions) {
+    loadMonsterOptions(monsterOptions, monsterType) {
         this.resetMonsterCreator();
+        this.monsterType = monsterType;
         this.monsterOptions = monsterOptions;
         this.createNameField();
     }
@@ -25,9 +26,15 @@ export default class ConfiguratorView {
         let nameLabel = document.createElement("Label");
         nameLabel.setAttribute("for", inputField);
         nameLabel.innerHTML = "Name your new monster";
-        inputField.onchange = () => this.controller.updateMonster(inputField);
+        inputField.addEventListener("keyup", event => this.updateMonsterOnEnter(event, inputField));
         this.configuratorDiv.appendChild(nameLabel);
         this.configuratorDiv.appendChild(inputField);
+    }
+
+    updateMonsterOnEnter(event, inputField){
+        if (event.key === "Enter") {
+            this.controller.updateMonster(inputField);
+        }
     }
 
     drawNextInputField() {
@@ -104,12 +111,12 @@ export default class ConfiguratorView {
             if (lastElement) {
                 selector.onchange = () => this.createMonsterImageUploader(selector);;
             }
-
             else if (label === "Type of Monster") {
                 selector.onchange = () => this.controller.startMonsterCreation(selector.value);
             }
-            //  else if(label ==="Amount of Arms" && this.monsterType === "Water") {
-            //     selector.onchange = () => this.adjustLegSelector(selector);} 
+            else if(label === "Amount of Arms" && this.monsterType === "Water") {
+                  selector.onchange = () => this.adjustLegSelector(selector);
+                } 
             else if (label != "Type of Monster") {
                 selector.onchange = () => this.controller.updateMonster(selector);
             }
@@ -119,14 +126,16 @@ export default class ConfiguratorView {
 
 
     adjustLegSelector(selector) {
-        // if(selector.value > 4){
-        //     document.getElementById("Amount of Legs").style.visibility = "hidden";
-        //     document.getElementById("Amount of LegsLabel").style.visibility = "hidden";
-
-        // } else {
-        //     document.getElementById("Amount of LegsLabel").style.visibility = "visible";
-        //     document.getElementById("Amount of Legs").style.visibility = "visible";
-        // }
+        let legSelector = document.getElementById("Amount of Legs");
+        if(legSelector == null){
+            legSelector = this.monsterOptions.find(x => "Amount of Legs");
+            console.log(this.monsterOptions.find(x => "Amount of Legs"))
+        }
+        
+        if(selector.value > 4){
+            console.log(" check");
+        } 
+        this.controller.updateMonster(selector);
     }
 
 

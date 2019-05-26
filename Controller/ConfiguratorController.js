@@ -10,7 +10,7 @@ export default class ConfiguratorController {
 
     startMonsterCreation(monsterType) {
         this.monsterController.createNewMonster(monsterType);
-        this.view.loadMonsterOptions(this.monsterController.newMonster.monsterOptions);
+        this.view.loadMonsterOptions(this.monsterController.newMonster.monsterOptions, monsterType);
     }
 
     updateMonster(selector) {
