@@ -131,15 +131,40 @@ export default class ConfiguratorView {
 
     adjustLegSelector(selector) {
         let legSelector = document.getElementById("Amount of Legs");
-        if(legSelector == null){
-            legSelector = this.monsterOptions.find(x => "Amount of Legs");
-            console.log(this.monsterOptions.find(x => "Amount of Legs"))
+        if(legSelector == null && selector.value > 4){         
+                for(let element in this.monsterOptions){
+                    let key = Object.keys(this.monsterOptions[element]);
+                    if(key == "Amount of Legs"){
+                        this.monsterOptions[element][key] = [0];
+                    }                 
+                }    
+        }      
+        else if(legSelector != null){
+            if(selector.value > 4){
+                this.resetLegSelector(legSelector);
+                this.addLegSelectorOptions(legSelector, [0]);
+            } else {
+                this.resetLegSelector(legSelector);
+                this.addLegSelectorOptions(legSelector, [1,2,3,4]);
+            }
         }
-        
-        if(selector.value > 4){
-            console.log(" check");
-        } 
         this.controller.updateMonster(selector);
+    }
+
+    resetLegSelector(legSelector){
+        while(legSelector.firstChild)
+        legSelector.removeChild(legSelector.firstChild);
+    }
+
+    addLegSelectorOptions(legSelector, value){
+        legSelector.onchange = () => this.controller.updateMonster(legSelector);
+
+                for(let element in value){
+                let list = document.createElement("option")
+                let option = document.createTextNode(value[element]);
+                list.appendChild(option);
+                legSelector.appendChild(list);
+                }
     }
 
     resetMonsterCreator() {
