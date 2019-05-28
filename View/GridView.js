@@ -44,7 +44,7 @@ export default class GridView {
             let div = document.createElement("div");
             div.id = "" + i;
             div.addEventListener("dragover", this.allowDrop);
-            div.addEventListener("drop", this.drop);
+            div.addEventListener("drop", (event) => { this.drop(event); });
 
             let region = this.controller.getModel().getCurrentRegion();
             if(region.grid[y].Columns[x] == 1){
@@ -74,9 +74,15 @@ export default class GridView {
     drop(ev){
         ev.preventDefault();
         let data = ev.dataTransfer.getData("text");
-        let monster = document.getElementById(data);
-        monster.position = ev.target.id;
-        ev.target.appendChild(monster);
+        let ids = data.split(" ");
+        console.log(data);
+        console.log(ids);
+        if(ids.length > 1){
+            this.monsterController.monsters[ids[0]].position = ev.target.id;
+            console.log(this.monsterController.monsters);
+            let monsterImg = document.getElementById(data);
+            ev.target.appendChild(monsterImg);
+        }
     }
 
     drag(ev){
