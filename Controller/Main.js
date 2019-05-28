@@ -4,4 +4,4 @@ import MonsterController from "./MonsterController";
 
 const monsterController = new MonsterController();
 const configuratorController = new ConfiguratorController(monsterController);
-const gridController = new GridController(0);
+const gridController = new GridController(0, monsterController);

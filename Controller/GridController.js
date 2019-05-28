@@ -3,9 +3,9 @@ import GridView from "../View/GridView"
 
 export default class GridController {
 
-    constructor(regionId){
+    constructor(regionId, monsterController){
         this.model = new GridModel(regionId);
-        this.view = new GridView(this);
+        this.view = new GridView(this, monsterController);
     }
 
     getModel(){

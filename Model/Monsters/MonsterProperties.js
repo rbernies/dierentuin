@@ -12,5 +12,8 @@ export default class MonsterProperties{
         this.canSwim = false;
         this.color = "";
         this.image = "";
+
+        this.position = 0;
+        this.monsterId = 0;
     }
 }

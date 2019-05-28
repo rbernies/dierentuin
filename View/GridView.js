@@ -1,8 +1,9 @@
 
 export default class GridView {
 
-    constructor(controller){
+    constructor(controller, monsterController){
         this.controller = controller;
+        this.monsterController = monsterController;
 
         this.addRegionOptions();
         this.addGrid();
@@ -55,6 +56,14 @@ export default class GridView {
 
             grid.appendChild(div);
         }
+
+        for(let i = 0; i < this.monsterController.monsters.length; i++){
+            let div = document.getElementById(this.monsterController.monsters[i].position);
+            let img = document.createElement("img");
+            img.className = "tile";
+            img.src = this.monsterController.monsters[i].image;
+            div.appendChild(img);
+        }
     }
 
     allowDrop(ev){
@@ -65,7 +74,9 @@ export default class GridView {
     drop(ev){
         ev.preventDefault();
         let data = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(data));
+        let monster = document.getElementById(data);
+        monster.position = ev.target.id;
+        ev.target.appendChild(monster);
     }
 
     drag(ev){

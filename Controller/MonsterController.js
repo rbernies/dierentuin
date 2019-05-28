@@ -33,7 +33,12 @@ export default class MonsterController {
     }
 
     saveMonster() {
+        let monsterId = this.monsters.length;
+        this.newMonster.monsterId = monsterId;
         this.monsters.push(this.newMonster);
         console.log(this.monsters);
+
+        //belongs in a view class!!!!
+        document.getElementById("monster").id = monsterId + " monster";
     }
 }
