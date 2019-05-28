@@ -1,4 +1,3 @@
-import MonsterModel from "../Model/Monsters/MonsterModel"
 import WaterMonsterModel from "../Model/Monsters/WaterMonsterModel";
 import FireMonsterModel from "../Model/Monsters/FireMonsterModel";
 import EarthMonsterModel from "../Model/Monsters/EarthMonsterModel";
@@ -34,7 +33,7 @@ export default class MonsterController {
     }
 
     saveMonster() {
-        this.monsters.push(new MonsterModel(this.newMonster));
+        this.monsters.push(this.newMonster);
         console.log(this.monsters);
     }
 }
