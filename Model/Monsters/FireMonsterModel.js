@@ -1,43 +1,52 @@
-import MonsterModel from "./MonsterModel"
+import MonsterProperties from "./MonsterProperties";
 
-export default class FireMonsterModel {
+export default class FireMonsterModel extends MonsterProperties {
 
     constructor() {
-        this.armAmountOption = [1, 2, 3, 4, 5, 6];
-        this.armTypeOption = ["tentacle", "claws", "claw-wings"];
-        this.eyeAmountOption = [1, 2, 3, 4];
-        this.furOption = ["scales", "feathers"];
-        this.colorOption = ["red", "orange", "brown"];
+        super();
+        this.monsterOptions = [];
+        this.monsterOptions.push({ "Amount of Arms": [1, 2, 3, 4, 5, 6] });
+        this.monsterOptions.push({ "Type of Arms": ["tentacles", "claws", "claw-wings"] });
+        this.monsterOptions.push({ "Amount of Eyes": [1, 2, 3, 4] });
+        this.monsterOptions.push({ "Type of Fur": ["scales", "feathers"] });
+        this.monsterOptions.push({ "Color": ["red", "orange", "brown"] });
 
-        this.legAmount = 2;
-        this.canFly = false;
-        this.canSwim = false;
+        this.monsterType = "Fire";
     }
 
     updateMonster(option, value) {
         switch (option) {
-            case "armAmount":
+            case "monsterName":
+                this.monsterName = value;
+                break;
+            case "Amount of Arms":
                 this.armAmount = value;
-                if (value > 2) {                
+                if (value > 2) {
                     this.legAmount = 0;
                 } else {
                     this.legAmount = 2;
                 }
                 break;
-            case "armType":
+            case "Type of Arms":
                 this.armType = value;
                 break;
-            case "eyeAmount":
+            case "Amount of Eyes":
                 this.eyeAmount = value;
-            case "furType":
+                break;
+            case "Type of Fur":
                 if (value === "feathers") {
                     this.canFly = true;
                 } else {
                     this.canFly = false;
                 }
-                this.fur = value;
-            case "color":
+                this.furType = value;
+                break;
+            case "Color":
                 this.color = value;
+                break;
+            case "monsterImage":
+                this.image = value;
+                break;
             default:
                 return null;
         }

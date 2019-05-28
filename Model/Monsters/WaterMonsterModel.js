@@ -1,47 +1,53 @@
-import MonsterModel from "./MonsterModel"
+import MonsterProperties from "./MonsterProperties";
 
-export default class WaterMonsterModel  {
+export default class WaterMonsterModel extends MonsterProperties {
 
-  constructor() {
-    this.armAmountOption = [1, 2, 3, 4, 5, 6, 7, 8];
-    this.armTypeOption = ["tentacle", "fins"];
-    this.legAmountOption = [1, 2, 3, 4];
-    this.eyeAmountOption = [1, 2, 3, 4, 5, 6, 7, 8];
-    this.furOption = ["scales", "slime"];
-    this.colorOption = ["blue", "red", "green"];
+    constructor() {
+        super();
+        this.monsterOptions = [];
+        this.monsterOptions.push({ "Amount of Arms": [1, 2, 3, 4, 5, 6, 7, 8] });
+        this.monsterOptions.push({ "Type of Arms": ["tentacles", "fangs"] });
+        this.monsterOptions.push({ "Amount of Legs": [1, 2, 3, 4] });
+        this.monsterOptions.push({ "Amount of Eyes": [1, 2, 3, 4, 5, 6, 7, 8] });
+        this.monsterOptions.push({ "Type of Fur": ["scales", "slime"] });
+        this.monsterOptions.push({ "Color": ["blue", "red", "green"] });
 
-    this.armAmount = 8;
-    this.canFly = false;
-    this.canSwim = true;
-  }
-
-  updateMonster(option, value) {
-    console.log(option);
-    switch (option) {
-      case "armAmount":
-      console.log(value);
-        this.armAmount = value;
-        if (value > 4) {
-          console.log(" hi");
-          this.legAmountOption = [0];
-          this.legAmount = 0;
-        } else {
-          this.legAmountOption = [1, 2, 3, 4];
-        }
-        break;
-      case "armType":
-        this.armType = value;
-        break;
-      case "legAmount":
-        this.legAmount = value;
-      case "eyeAmount":
-        this.eyeAmount = value;
-      case "furType":
-        this.fur = value;
-      case "color":
-        this.color = value;
-      default:
-        return null;
+        this.monsterType = "Water";
+        this.canSwim = true;
     }
-  }
+
+
+    updateMonster(option, value) {
+        switch (option) {
+            case "monsterName":
+                this.monsterName = value;
+                break;
+            case "Amount of Arms":
+                this.armAmount = value;
+                if (value > 4) {
+                    this.legAmount = 0;
+                }
+                break;
+            case "Type of Arms":
+                this.armType = value;
+                break;
+            case "Amount of Legs":
+                this.legAmount = value;
+                break;
+            case "Amount of Eyes":
+                this.eyeAmount = value;
+                break;
+            case "Type of Fur":
+                this.furType = value;
+                break;
+            case "Color":
+                this.color = value;
+                break;
+            case "monsterImage":
+                this.image = value;
+                break;
+            default:
+                return null;
+        }
+    }
 }

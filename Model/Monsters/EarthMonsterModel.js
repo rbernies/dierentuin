@@ -1,27 +1,37 @@
-import MonsterModel from "./MonsterModel"
+import MonsterProperties from "./MonsterProperties";
 
-export default class EarthMonsterModel {
+export default class EarthMonsterModel extends MonsterProperties {
 
     constructor() {
-        this.legAmountOption = [2, 4, 6];
-        this.furOption = ["hair", "scales", "slime"];
-        this.colorOption = ["purple", "orange", "white"];
+        super();
+        this.monsterOptions = [];
+        this.monsterOptions.push({ "Amount of Legs": [2, 4, 6] });
+        this.monsterOptions.push({ "Type of Fur": ["hair", "scales", "slime"] });
+        this.monsterOptions.push({ "Color": ["purple", "orange", "white"] });
 
+        this.monsterType = "Earth";
         this.armAmount = 2;
         this.armType = "claws";
         this.eyeAmount = 2;
-        this.canFly = false;
-        this.canSwim = false;
     }
 
     updateMonster(option, value) {
         switch (option) {
-            case "legAmount":
+            case "monsterName":
+                this.monsterName = value;
+                break;
+            case "Amount of Legs":
                 this.legAmount = value;
-            case "furType":
-                this.fur = value;
-            case "color":
+                break;
+            case "Type of Fur":
+                this.furType = value;
+                break;
+            case "Color":
                 this.color = value;
+                break;
+            case "monsterImage":
+                this.image = value;
+                break;
             default:
                 return null;
         }

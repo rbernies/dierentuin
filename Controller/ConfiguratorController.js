@@ -1,21 +1,25 @@
-import ConfiguratorModel  from "../Model/Configurator/ConfiguratorModel"
 import ConfiguratorView from "../View/ConfiguratorView"
 
 
 export default class ConfiguratorController {
 
-    constructor() {
-        this.model = new ConfiguratorModel();
-        this.view = new ConfiguratorView(this, this.model.getMonsterTypes());
-        this.startMonsterCreation("water");
+    constructor(monsterController) {
+        this.monsterController = monsterController;
+        this.view = new ConfiguratorView(this, this.monsterController.monsterTypes);
     }
 
     startMonsterCreation(monsterType) {
-        this.view.startMonsterCreator(this.model.getMonsterOptions(monsterType));
+        this.monsterController.createNewMonster(monsterType);
+        this.view.loadMonsterOptions(this.monsterController.newMonster.monsterOptions, monsterType);
     }
 
-    updateMonster(option, value){
-        this.model.newMonster.updateMonster(option, value);
-        this.view.updateConfigurator(this.model.newMonster);
+    updateMonster(selector) {
+        this.monsterController.updateMonster(selector.id, selector.value);
+        this.view.drawNextInputField(selector.id);
+    }
+
+    saveMonster() {
+        this.monsterController.saveMonster();
+        this.view.resetMonsterCreator();
     }
 }
