@@ -16,6 +16,8 @@
 #monsterPreview {
     border: 1px solid black;
     height: 20%;
+    width: 30%;
+    margin: 0 auto;
 }
 
 #select-text {
