@@ -5,6 +5,7 @@
 
 #zoo{
     padding: 1%;
+    margin: 0 auto;
 }
 
 #container{
@@ -17,18 +18,46 @@
     height: 20%;
 }
 
+#select-text {
+    float:left;
+}
+
+#region-select {
+    margin-left: 2%;
+    margin-top: 0.5%;
+}
+
 .panel{
     border: solid black 1px;
     margin-top: 2%;
     padding: 1%;
 }
 
-canvas {
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(2rem, 1fr));
+    grid-auto-rows: 1fr;
+}
+
+.grid::before {
+  content: '';
+  width: 0;
+  padding-bottom: 100%;
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
+
+.grid > *:first-child {
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
+
+.grid > * {
+  background: white;
+  border: 1px black solid;
+}
+
+.tile {
     width: 100%;
     height: 100%;
-    max-height: 700px;
-    max-width: 700px;
-    margin: 0 auto;
-    display: block;
-    z-index: 1;
 }
