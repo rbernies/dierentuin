@@ -10,6 +10,22 @@ export default class ConfiguratorView {
         this.imageChooserDiv = document.getElementById("imageChooser");
         this.drawnElements = [];
         this.createNewDropDown("Type of Monster", monsterTypes);
+
+        this.monsterPreview = document.getElementById("monsterPreview");
+        this.monsterPreview.addEventListener("drop", (ev) => { this.drop(ev); });
+        this.monsterPreview.addEventListener("dragover", (ev) => { ev.preventDefault(); });
+    }
+
+    drop(ev){
+        ev.preventDefault();
+        let data = ev.dataTransfer.getData("text");
+        let ids = data.split(" ");
+        console.log(ids);
+        if(ids.length > 1){
+            let monster = this.controller.monsterController.monsters[ids[0]];
+            //add all the right options based on the monster
+            this.controller.monsterController.removeMonster(ids[0]);
+        }
     }
 
     loadMonsterOptions(monsterOptions, monsterType) {

@@ -7,10 +7,6 @@ export default class GridView {
 
         this.addRegionOptions();
         this.addGrid();
-
-        //these 2 lines belong in the class where the monster is being created
-        let monster = document.getElementById("monster");
-        monster.addEventListener("dragstart", this.drag);
     }
 
     addRegionOptions(){
@@ -70,19 +66,14 @@ export default class GridView {
         ev.preventDefault();
     }
 
-    //this method belongs in the class where the monster is being created
     drop(ev){
         ev.preventDefault();
+        let id = this.monsterController.monsters.length-1;
         let data = ev.dataTransfer.getData("text");
-        let ids = data.split(" ");
-        console.log(data);
-        console.log(ids);
-        if(ids.length > 1){
-            this.monsterController.monsters[ids[0]].position = ev.target.id;
-            console.log(this.monsterController.monsters);
-            let monsterImg = document.getElementById(data);
-            ev.target.appendChild(monsterImg);
-        }
+        this.monsterController.monsters[id].position = ev.target.id;
+        let monsterImg = document.getElementById(data);
+        ev.target.appendChild(monsterImg);
+        monsterImg.id = id + " monster";
     }
 
     drag(ev){

@@ -37,8 +37,12 @@ export default class MonsterController {
         this.newMonster.monsterId = monsterId;
         this.monsters.push(this.newMonster);
         console.log(this.monsters);
+    }
 
-        //belongs in a view class!!!!
-        document.getElementById("monster").id = monsterId + " monster";
+    removeMonster(id) {
+        this.monsters.splice(id, 1);
+        for(let i = id; i < this.monsters.length; i++){
+            this.monsters[i].monsterId = i;
+        }
     }
 }
