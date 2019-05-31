@@ -18,14 +18,16 @@ export default class ConfiguratorView {
 
     drop(ev){
         ev.preventDefault();
+        console.log(this.controller.monsterController.monsters);
         let data = ev.dataTransfer.getData("text");
+        let preview = document.getElementById(data);
         let ids = data.split(" ");
         if(ids.length > 1){
+            console.log("config drop - " + ids[0]);
             let monster = this.controller.monsterController.monsters[ids[0]];
             this.controller.monsterController.newMonster = monster;
             //add all the right options based on the newMonster
             this.controller.monsterController.removeMonster(ids[0]);
-            let preview = document.getElementById(data);
             preview.id = this.controller.monsterController.monsters.length + " monster";
             ev.target.appendChild(preview);
         }

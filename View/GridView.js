@@ -122,12 +122,15 @@ export default class GridView {
         let ids = data.split(" ");
         if(ids.length > 1){
             let monsterId = ids[0];
+            console.log("drop monster with id " + monsterId);
             if(monsterId >= this.monsterController.monsters.length){
-                //this.monsterController.newMonster.position = ev.target.id;
                 this.monsterController.saveMonster();
-                //return;
+                console.log("saved monster to array");
+            }else{
+                console.log("could not save monster to array");
             }
             this.monsterController.monsters[monsterId].position = ev.target.id;
+            this.monsterController.saveToLocalStorage();
             console.log(this.monsterController.monsters);
         }                       
     }

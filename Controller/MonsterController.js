@@ -6,16 +6,10 @@ import WindMonsterModel from "../Model/Monsters/WindMonsterModel";
 export default class MonsterController {
 
     constructor() {
-        this.monsters = [];
+        console.log(JSON.parse(localStorage.getItem("monsters")));
+        this.monsters = JSON.parse(localStorage.getItem("monsters"));
+        if(!this.monsters) this.monsters = [];
         
-
-        let keys = Object.keys(localStorage);
-
-        for(let i = 0; i < keys.length; i++){
-            this.monsters.push(JSON.parse(localStorage.getItem(i)));
-            console.log(this.monsters[i]);
-
-        }
         this.monsterTypes = ["Water", "Fire", "Earth", "Wind"];
     }
 
@@ -44,8 +38,10 @@ export default class MonsterController {
     saveMonster() {
         let monsterId = this.monsters.length;
         this.newMonster.monsterId = monsterId;
+        console.log("save monster, length: " + this.monsters.length);
         this.monsters.push(this.newMonster);
-        localStorage.setItem(monsterId, JSON.stringify(this.newMonster));
+        console.log("saved monster, length: " + this.monsters.length);
+        this.saveToLocalStorage();
     }
 
     removeMonster(id) {
@@ -56,6 +52,10 @@ export default class MonsterController {
             if(img) img.id = i + " monster";
             else console.log("image is null " + parseInt(i+1) + " monster");
         }
-        console.log(this.monsters);
+        this.saveToLocalStorage();
+    }
+
+    saveToLocalStorage(){
+        localStorage.setItem("monsters", JSON.stringify(this.monsters));
     }
 }
