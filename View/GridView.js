@@ -4,9 +4,50 @@ export default class GridView {
     constructor(controller, monsterController){
         this.controller = controller;
         this.monsterController = monsterController;
+        this.monsterPreviewDiv = document.getElementById("monsterPreview");
 
         this.addRegionOptions();
         this.addGrid();
+    }
+
+    createImageTag(){
+        let preview = document.createElement("IMG");
+        let monsterId = this.monsterController.monsters.length;
+        preview.id = monsterId + " monster";
+        preview.className = "tile";
+        preview.draggable = true;
+        preview.addEventListener("dragstart", this.drag);
+        preview.addEventListener("click", event => this.showMonsterProperties(monsterId));
+        return preview;
+    }
+
+    previewFile() {
+        let preview = this.createImageTag();     
+        let file    = document.querySelector('input[type=file]').files[0];
+        let reader  = new FileReader();
+
+        reader.onloadend = () => {
+          preview.src = reader.result;
+          this.monsterController.updateMonster("monsterImage", preview.src);
+        }
+
+        if (file) {
+            console.log("yes");
+          reader.readAsDataURL(file);
+        } else {
+            console.log("no");
+          preview.src = "";
+        }
+        this.monsterPreviewDiv.appendChild(preview);       
+      }
+
+    showMonsterProperties(monsterId){
+        let monster = this.monsterController.monsters[monsterId];
+        let div = document.getElementById(monster.position);
+
+        let audio = new Audio(monster.audio);
+        audio.loop = false;
+        audio.play();   
     }
 
     addRegionOptions(){
@@ -55,9 +96,13 @@ export default class GridView {
 
         for(let i = 0; i < this.monsterController.monsters.length; i++){
             let div = document.getElementById(this.monsterController.monsters[i].position);
+            let monsterId = this.monsterController.monsters[i].monsterId;
             let img = document.createElement("img");
             img.className = "tile";
+            img.id = monsterId + " monster";
             img.src = this.monsterController.monsters[i].image;
+            img.addEventListener("dragstart", this.drag);
+            img.addEventListener("click", event => this.showMonsterProperties(monsterId));
             div.appendChild(img);
         }
     }
@@ -68,12 +113,20 @@ export default class GridView {
 
     drop(ev){
         ev.preventDefault();
-        let id = this.monsterController.monsters.length-1;
-        let data = ev.dataTransfer.getData("text");
-        this.monsterController.monsters[id].position = ev.target.id;
+        let data = ev.dataTransfer.getData("text");  
         let monsterImg = document.getElementById(data);
         ev.target.appendChild(monsterImg);
-        monsterImg.id = id + " monster";
+        console.log(data);
+        let ids = data.split(" ");
+        if(ids.length > 1){
+            let monsterId = ids[0];
+            if(monsterId >= this.monsterController.monsters.length ){
+                this.monsterController.newMonster.position = ev.target.id;
+                this.monsterController.saveMonster();
+                return;
+            }
+            this.monsterController.monsters[monsterId].position = ev.target.id;
+        }                       
     }
 
     drag(ev){

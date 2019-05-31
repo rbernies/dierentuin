@@ -13,6 +13,7 @@ export default class EarthMonsterModel extends MonsterProperties {
         this.armAmount = 2;
         this.armType = "claws";
         this.eyeAmount = 2;
+        this.audio = "Resources/sounds/EarthMonster.wav";
     }
 
     updateMonster(option, value) {

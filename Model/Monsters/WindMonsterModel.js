@@ -14,6 +14,7 @@ export default class WindMonsterModel extends MonsterProperties {
         this.armAmount = 2;
         this.eyeAmount = 2;
         this.canFly = true;
+        this.audio = "Resources/sounds/WindMonster.wav";
     }
 
     updateMonster(option, value) {
