@@ -15,5 +15,6 @@ export default class MonsterProperties{
 
         this.position = 0;
         this.monsterId = 0;
+        this.regionId = 0;
     }
 }

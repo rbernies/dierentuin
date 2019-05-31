@@ -52,6 +52,10 @@ export default class MonsterController {
         this.monsters.splice(id, 1);
         for(let i = id; i < this.monsters.length; i++){
             this.monsters[i].monsterId = i;
+            let img = document.getElementById(parseInt(i+1) + " monster");
+            if(img) img.id = i + " monster";
+            else console.log("image is null " + parseInt(i+1) + " monster");
         }
+        console.log(this.monsters);
     }
 }

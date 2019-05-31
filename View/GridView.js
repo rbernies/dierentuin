@@ -17,7 +17,8 @@ export default class GridView {
         preview.className = "tile";
         preview.draggable = true;
         preview.addEventListener("dragstart", this.drag);
-        preview.addEventListener("click", event => this.showMonsterProperties(monsterId));
+        preview.addEventListener("click", event => this.showMonsterProperties(event));
+
         return preview;
     }
 
@@ -32,22 +33,23 @@ export default class GridView {
         }
 
         if (file) {
-            console.log("yes");
           reader.readAsDataURL(file);
         } else {
-            console.log("no");
           preview.src = "";
         }
         this.monsterPreviewDiv.appendChild(preview);       
       }
 
-    showMonsterProperties(monsterId){
-        let monster = this.monsterController.monsters[monsterId];
-        let div = document.getElementById(monster.position);
-
-        let audio = new Audio(monster.audio);
-        audio.loop = false;
-        audio.play();   
+    showMonsterProperties(event){
+        let ids = event.target.id.split(" ");
+        if(ids.length > 1){
+            let monster = this.monsterController.monsters[ids[0]];
+            let div = document.getElementById(monster.position);
+    
+            let audio = new Audio(monster.audio);
+            audio.loop = false;
+            audio.play();
+        }
     }
 
     addRegionOptions(){
@@ -102,7 +104,7 @@ export default class GridView {
             img.id = monsterId + " monster";
             img.src = this.monsterController.monsters[i].image;
             img.addEventListener("dragstart", this.drag);
-            img.addEventListener("click", event => this.showMonsterProperties(monsterId));
+            img.addEventListener("click", event => this.showMonsterProperties(event));
             div.appendChild(img);
         }
     }
@@ -120,12 +122,13 @@ export default class GridView {
         let ids = data.split(" ");
         if(ids.length > 1){
             let monsterId = ids[0];
-            if(monsterId >= this.monsterController.monsters.length ){
-                this.monsterController.newMonster.position = ev.target.id;
+            if(monsterId >= this.monsterController.monsters.length){
+                //this.monsterController.newMonster.position = ev.target.id;
                 this.monsterController.saveMonster();
-                return;
+                //return;
             }
             this.monsterController.monsters[monsterId].position = ev.target.id;
+            console.log(this.monsterController.monsters);
         }                       
     }
 
