@@ -23,7 +23,6 @@ export default class ConfiguratorView {
         let preview = document.getElementById(data);
         let ids = data.split(" ");
         if(ids.length > 1){
-            console.log("config drop - " + ids[0]);
             let monster = this.controller.monsterController.monsters[ids[0]];
             this.controller.monsterController.newMonster = monster;
             //add all the right options based on the newMonster

@@ -11,6 +11,7 @@ export default class MonsterController {
         if(!this.monsters) this.monsters = [];
         
         this.monsterTypes = ["Water", "Fire", "Earth", "Wind"];
+        this.regionId = 0;
     }
 
     createNewMonster(monsterType) {
@@ -38,9 +39,8 @@ export default class MonsterController {
     saveMonster() {
         let monsterId = this.monsters.length;
         this.newMonster.monsterId = monsterId;
-        console.log("save monster, length: " + this.monsters.length);
+        this.newMonster.regionId = this.regionId;
         this.monsters.push(this.newMonster);
-        console.log("saved monster, length: " + this.monsters.length);
         this.saveToLocalStorage();
     }
 

@@ -31,6 +31,10 @@ export default class GridModel {
         this.loadRegion(regionId);
     }
 
+    getRegionId(){
+        return this.regionId;
+    }
+
     getRegions(){
         return this.regions;
     }

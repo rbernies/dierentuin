@@ -66,6 +66,7 @@ export default class GridView {
 
         sRegion.onchange = () => { 
             this.controller.changeRegion(sRegion.selectedIndex);
+            this.monsterController.regionId = sRegion.selectedIndex;
             this.addGrid();
         };
     }
@@ -97,15 +98,17 @@ export default class GridView {
         }
 
         for(let i = 0; i < this.monsterController.monsters.length; i++){
-            let div = document.getElementById(this.monsterController.monsters[i].position);
-            let monsterId = this.monsterController.monsters[i].monsterId;
-            let img = document.createElement("img");
-            img.className = "tile";
-            img.id = monsterId + " monster";
-            img.src = this.monsterController.monsters[i].image;
-            img.addEventListener("dragstart", this.drag);
-            img.addEventListener("click", event => this.showMonsterProperties(event));
-            div.appendChild(img);
+            if(this.monsterController.monsters[i].regionId == this.controller.getModel().getRegionId()){
+                let div = document.getElementById(this.monsterController.monsters[i].position);
+                let monsterId = this.monsterController.monsters[i].monsterId;
+                let img = document.createElement("img");
+                img.className = "tile";
+                img.id = monsterId + " monster";
+                img.src = this.monsterController.monsters[i].image;
+                img.addEventListener("dragstart", this.drag);
+                img.addEventListener("click", event => this.showMonsterProperties(event));
+                div.appendChild(img);
+            }
         }
     }
 
@@ -122,16 +125,11 @@ export default class GridView {
         let ids = data.split(" ");
         if(ids.length > 1){
             let monsterId = ids[0];
-            console.log("drop monster with id " + monsterId);
             if(monsterId >= this.monsterController.monsters.length){
                 this.monsterController.saveMonster();
-                console.log("saved monster to array");
-            }else{
-                console.log("could not save monster to array");
             }
             this.monsterController.monsters[monsterId].position = ev.target.id;
             this.monsterController.saveToLocalStorage();
-            console.log(this.monsterController.monsters);
         }                       
     }
 
