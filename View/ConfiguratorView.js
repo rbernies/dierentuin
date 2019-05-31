@@ -62,29 +62,17 @@ export default class ConfiguratorView {
         this.controller.updateMonster(selector);
 
         if (!this.fileChooserVisible) {
-            let monsterImage = document.createElement("input");
+            let monsterImage = document.createElement("input");    
+
             monsterImage.setAttribute("id", "monsterImage");
             monsterImage.setAttribute("type", "file");
             let nameLabel = document.createElement("Label");
             nameLabel.setAttribute("for", monsterImage);
             nameLabel.innerHTML = "Upload your Monster";
-            monsterImage.onchange = () => this.drawSaveMonsterButton(monsterImage);
+            monsterImage.onchange = () => this.controller.previewMonster();
             this.imageChooserDiv.appendChild(nameLabel);
             this.imageChooserDiv.appendChild(monsterImage);
             this.fileChooserVisible = true;
-        }
-    }
-
-    drawSaveMonsterButton(monsterImage) {
-        this.controller.updateMonster(monsterImage);
-        if (!this.saveMonsterButtonVisible) {
-            let button = document.createElement("button");
-            button.type = "button";
-            button.className = "btn btn-primary";
-            button.appendChild(document.createTextNode("Make my Beast!"));
-            button.onclick = () => this.controller.saveMonster();
-            this.imageChooserDiv.appendChild(button);
-            this.saveMonsterButtonVisible = true;
         }
     }
 

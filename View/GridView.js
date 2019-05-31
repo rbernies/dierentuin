@@ -4,13 +4,50 @@ export default class GridView {
     constructor(controller, monsterController){
         this.controller = controller;
         this.monsterController = monsterController;
+        this.monsterPreviewDiv = document.getElementById("monsterPreview");
 
         this.addRegionOptions();
         this.addGrid();
+    }
 
-        //these 2 lines belong in the class where the monster is being created
-        let monster = document.getElementById("monster");
-        monster.addEventListener("dragstart", this.drag);
+    createImageTag(){
+        let preview = document.createElement("IMG");
+        let monsterId = this.monsterController.monsters.length;
+        preview.id = monsterId + " monster";
+        preview.className = "tile";
+        preview.draggable = true;
+        preview.addEventListener("dragstart", this.drag);
+        preview.addEventListener("click", event => this.showMonsterProperties(monsterId));
+        return preview;
+    }
+
+    previewFile() {
+        let preview = this.createImageTag();     
+        let file    = document.querySelector('input[type=file]').files[0];
+        let reader  = new FileReader();
+
+        reader.onloadend = () => {
+          preview.src = reader.result;
+          this.monsterController.updateMonster("monsterImage", preview.src);
+        }
+
+        if (file) {
+            console.log("yes");
+          reader.readAsDataURL(file);
+        } else {
+            console.log("no");
+          preview.src = "";
+        }
+        this.monsterPreviewDiv.appendChild(preview);       
+      }
+
+    showMonsterProperties(monsterId){
+        let monster = this.monsterController.monsters[monsterId];
+        let div = document.getElementById(monster.position);
+
+        let audio = new Audio(monster.audio);
+        audio.loop = false;
+        audio.play();   
     }
 
     addRegionOptions(){
@@ -59,9 +96,13 @@ export default class GridView {
 
         for(let i = 0; i < this.monsterController.monsters.length; i++){
             let div = document.getElementById(this.monsterController.monsters[i].position);
+            let monsterId = this.monsterController.monsters[i].monsterId;
             let img = document.createElement("img");
             img.className = "tile";
+            img.id = monsterId + " monster";
             img.src = this.monsterController.monsters[i].image;
+            img.addEventListener("dragstart", this.drag);
+            img.addEventListener("click", event => this.showMonsterProperties(monsterId));
             div.appendChild(img);
         }
     }
@@ -73,16 +114,20 @@ export default class GridView {
     //this method belongs in the class where the monster is being created
     drop(ev){
         ev.preventDefault();
-        let data = ev.dataTransfer.getData("text");
-        let ids = data.split(" ");
+        let data = ev.dataTransfer.getData("text");  
+        let monsterImg = document.getElementById(data);
+        ev.target.appendChild(monsterImg);
         console.log(data);
-        console.log(ids);
+        let ids = data.split(" ");
         if(ids.length > 1){
-            this.monsterController.monsters[ids[0]].position = ev.target.id;
-            console.log(this.monsterController.monsters);
-            let monsterImg = document.getElementById(data);
-            ev.target.appendChild(monsterImg);
-        }
+            let monsterId = ids[0];
+            if(monsterId >= this.monsterController.monsters.length ){
+                this.monsterController.newMonster.position = ev.target.id;
+                this.monsterController.saveMonster();
+                return;
+            }
+            this.monsterController.monsters[monsterId].position = ev.target.id;
+        }                       
     }
 
     drag(ev){

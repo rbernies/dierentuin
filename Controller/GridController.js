@@ -8,8 +8,16 @@ export default class GridController {
         this.view = new GridView(this, monsterController);
     }
 
+    previewMonster(){
+        this.view.previewFile();
+    }
+
     getModel(){
         return this.model;
+    }
+
+    showMonsterProperties(monsterId){
+        this.view.showMonsterProperties(monsterId);
     }
 
     changeRegion(regionId){

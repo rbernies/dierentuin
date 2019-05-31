@@ -7,6 +7,15 @@ export default class MonsterController {
 
     constructor() {
         this.monsters = [];
+        
+
+        let keys = Object.keys(localStorage);
+
+        for(let i = 0; i < keys.length; i++){
+            this.monsters.push(JSON.parse(localStorage.getItem(i)));
+            console.log(this.monsters[i]);
+
+        }
         this.monsterTypes = ["Water", "Fire", "Earth", "Wind"];
     }
 
@@ -36,9 +45,6 @@ export default class MonsterController {
         let monsterId = this.monsters.length;
         this.newMonster.monsterId = monsterId;
         this.monsters.push(this.newMonster);
-        console.log(this.monsters);
-
-        //belongs in a view class!!!!
-        document.getElementById("monster").id = monsterId + " monster";
+        localStorage.setItem(monsterId, JSON.stringify(this.newMonster))
     }
 }

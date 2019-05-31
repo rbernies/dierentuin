@@ -12,6 +12,7 @@ export default class FireMonsterModel extends MonsterProperties {
         this.monsterOptions.push({ "Color": ["red", "orange", "brown"] });
 
         this.monsterType = "Fire";
+        this.audio = "Resources/sounds/FireMonster.wav";
     }
 
     updateMonster(option, value) {
