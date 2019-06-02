@@ -22,5 +22,37 @@ export default class WeatherModel {
             this.rain = false;
             console.log("error: " + err);
         });
+
+        let map = {};
+        onkeydown = onkeyup = (e) => {
+            map[e.keyCode] = e.type == 'keydown';
+
+            if(map[17] && map[13]){
+                map = {};
+                this.changeWeather();
+                return false;
+            }
+        }
+    }
+
+    changeWeather(){
+        this.temperature = this.validate("Temperature: ", this.temperature);
+        this.wind = this.validate("Wind speed: ", this.wind);
+        this.rain = confirm("Rain: ", this.rain);
+        console.log(this);
+    }
+    
+    validate(message, defaultVal){
+        let text = prompt(message, defaultVal);
+        if(text === null) return defaultVal;
+        let temp = parseFloat(text);
+        while(!temp || temp.toString().length != text.length){
+            alert("You need to provide a valid (decimal) number, separated with a '.', or click 'Cancel' to skip.");
+            console.log(temp.toString().length + ", " + text.length);
+            text = prompt(message, defaultVal);
+            if(text === null) return defaultVal;
+            temp = parseFloat(text);
+        }
+        return temp;
     }
 }
