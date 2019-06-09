@@ -122,7 +122,7 @@ export default class ConfiguratorView {
                 selector.appendChild(list);
             }
             if (lastElement) {
-                selector.onchange = () => this.createMonsterImageUploader(selector);;
+                selector.onchange = () => this.createMonsterImageUploader(selector);
             }
             else if (label === "Type of Monster") {
                 selector.onchange = () => this.controller.startMonsterCreation(selector.value);
