@@ -45,28 +45,31 @@ export default class GridView {
         if (ids.length > 1) {
             let monster = this.monsterController.monsters[ids[0]];
             let div = document.getElementById(monster.position);
-
             let monsterInfo = document.querySelector(".monsterInfo");
 
             this.removeMonsterInfo();
 
             if(monsterInfo != div){
-
             div.className = "monsterInfo";
             let span = document.createElement("span");
             span.className = "monsterInfoText";
-            span.innerHTML = this.monsterController.monsters[ids[0]].monsterName;
+            span.innerHTML = "Name: " + monster.monsterName + "<br>" + "<br>"       
+            + "Type: " + monster.monsterType + "<br>" 
+            + "Amount of Arms: " + monster.armAmount + "<br>"
+            + "Type of Arms: " + monster.armType + "<br>"
+            + "Amount of Legs: " + monster.legAmount + "<br>"
+            + "Amount of Eyes: " + monster.eyeAmount + "<br>"
+            + "Type of Fur: " + monster.furType + "<br>"
+            + "Color: " + monster.color;
+ 
             div.appendChild(span);
-            }
-
             let audio = new Audio(monster.audio);
             audio.loop = false;
             audio.play();
-            
+            }            
         }
     }
 
-    //remove info popup of monster that no longer has focus
     removeMonsterInfo() {
         let info = document.querySelector(".monsterInfo");
         let span = document.querySelector(".monsterInfoText");

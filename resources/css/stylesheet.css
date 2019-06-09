@@ -64,20 +64,15 @@
     height: 100%;
 }
 
-.monsterInfo {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
-}
 
 .monsterInfo .monsterInfoText {
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-  
+    width: 150px;
+    background-color: rgb(0, 0, 0);
+    color: rgb(24, 161, 11);
+    border-color: rgb(83, 78, 7);
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 10px;
+    padding: 4px;
     position: absolute;
-    z-index: 1;
 }
