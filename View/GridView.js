@@ -50,6 +50,10 @@ export default class GridView {
             this.removeMonsterInfo();
 
             if(monsterInfo != div){
+            let deleteButton = document.createElement("button");
+            deleteButton.innerHTML = "Delete Monster";
+            deleteButton.addEventListener("click", () => this.monsterController.removeMonster(monster.monsterId));
+
             div.className = "monsterInfo";
             let span = document.createElement("span");
             span.className = "monsterInfoText";
@@ -61,7 +65,9 @@ export default class GridView {
             + "Amount of Eyes: " + monster.eyeAmount + "<br>"
             + "Type of Fur: " + monster.furType + "<br>"
             + "Color: " + monster.color;
- 
+            
+            span.appendChild(deleteButton);
+
             div.appendChild(span);
             let audio = new Audio(monster.audio);
             audio.loop = false;

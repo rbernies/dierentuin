@@ -44,6 +44,10 @@ export default class MonsterController {
         this.saveToLocalStorage();
     }
 
+    test(){
+        console.log("hi");
+    }
+
     removeMonster(id) {
         this.monsters.splice(id, 1);
         for(let i = id; i < this.monsters.length; i++){
