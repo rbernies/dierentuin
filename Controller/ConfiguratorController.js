@@ -3,8 +3,7 @@ import ConfiguratorView from "../View/ConfiguratorView"
 
 export default class ConfiguratorController {
 
-    constructor(monsterController, gridController) {
-        this.gridController = gridController;
+    constructor(monsterController) {
         this.monsterController = monsterController;
         this.view = new ConfiguratorView(this, this.monsterController.monsterTypes);
     }
@@ -12,6 +11,14 @@ export default class ConfiguratorController {
     startMonsterCreation(monsterType) {
         this.monsterController.createNewMonster(monsterType);
         this.view.loadMonsterOptions(this.monsterController.newMonster.monsterOptions, monsterType);
+    }
+
+    showMonsterProperties(event){
+        this.view.showMonsterProperties(event);
+    }
+
+    resetConfigurator(){
+        this.view.resetMonsterCreator();
     }
 
     updateMonster(selector) { 
@@ -22,10 +29,6 @@ export default class ConfiguratorController {
     editMonster(monster){
         this.monsterController.editMonster(monster);
         this.view.loadMonsterOptions(this.monsterController.newMonster.monsterOptions, monster.monsterType);
-    }
-
-    previewMonster(){
-        this.gridController.previewMonster();
     }
 
     saveMonster() {

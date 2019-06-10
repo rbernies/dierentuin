@@ -8,6 +8,8 @@ export default class ConfiguratorView {
         this.monsterTypeSelectArea = document.getElementById("monsterTypeArea");
         this.configuratorDiv = document.getElementById("configuratorArea");
         this.imageChooserDiv = document.getElementById("imageChooser");
+        this.monsterPreviewDiv = document.getElementById("monsterPreview");
+
         this.drawnElements = [];
         this.createNewDropDown("Type of Monster", monsterTypes);
 
@@ -34,7 +36,6 @@ export default class ConfiguratorView {
 
     editMonster(monster){
         document.getElementById("Type of Monster").value = monster.monsterType;
-        this.createNameField();
         document.getElementById("monsterName").value = monster.monsterName;
         this.drawNextInputField("monsterName");
         if(monster.monsterType == "Fire" || monster.monsterType == "Water"){
@@ -55,7 +56,7 @@ export default class ConfiguratorView {
         }
         document.getElementById("Type of Fur").value = monster.furType;
         this.drawNextInputField("Type of Fur");
-        
+
         let colorSelector = document.getElementById("Color");
         colorSelector.value = monster.color;
         this.createMonsterImageUploader(colorSelector);
@@ -118,7 +119,7 @@ export default class ConfiguratorView {
             let nameLabel = document.createElement("Label");
             nameLabel.setAttribute("for", monsterImage);
             nameLabel.innerHTML = "Upload your Monster";
-            monsterImage.onchange = () => this.controller.previewMonster();
+            monsterImage.onchange = () => this.previewFile();
             this.imageChooserDiv.appendChild(nameLabel);
             this.imageChooserDiv.appendChild(monsterImage);
             this.fileChooserVisible = true;
@@ -151,8 +152,7 @@ export default class ConfiguratorView {
                 selector.appendChild(list);
             }
             if (lastElement) {
-                console.log(selector.selectedIndex);
-                selector.oninput = () => this.createMonsterImageUploader(selector);
+                selector.onchange = () => this.createMonsterImageUploader(selector);
             }
             else if (label === "Type of Monster") {
                 selector.onchange = () => this.controller.startMonsterCreation(selector.value);
@@ -203,6 +203,92 @@ export default class ConfiguratorView {
                 list.appendChild(option);
                 legSelector.appendChild(list);
                 }
+    }
+
+    showMonsterProperties(event) {
+        let ids = event.target.id.split(" ");
+        if (ids.length > 1) {
+            let monster = this.controller.monsterController.monsters[ids[0]];
+            if(monster == null)
+            return;
+
+            let div = document.getElementById(monster.position);
+            let monsterInfo = document.querySelector(".monsterInfo");
+
+            this.removeMonsterInfo();
+
+            if(monsterInfo != div){
+            let deleteButton = document.createElement("button");
+            deleteButton.innerHTML = "Delete Monster";
+            deleteButton.addEventListener("click", () => this.controller.monsterController.removeMonster(monster.monsterId));
+
+            div.className = "monsterInfo";
+            let span = document.createElement("span");
+            span.className = "monsterInfoText";
+            span.innerHTML = "Name: " + monster.monsterName + "<br>" + "<br>"       
+            + "Type: " + monster.monsterType + "<br>" 
+            + "Amount of Arms: " + monster.armAmount + "<br>"
+            + "Type of Arms: " + monster.armType + "<br>"
+            + "Amount of Legs: " + monster.legAmount + "<br>"
+            + "Amount of Eyes: " + monster.eyeAmount + "<br>"
+            + "Type of Fur: " + monster.furType + "<br>"
+            + "Color: " + monster.color;
+            
+            span.appendChild(deleteButton);
+
+            div.appendChild(span);
+            let audio = new Audio(monster.audio);
+            audio.loop = false;
+            audio.play();
+            }            
+        }
+    }
+
+    removeMonsterInfo() {
+        let info = document.querySelector(".monsterInfo");
+        let span = document.querySelector(".monsterInfoText");
+        if (info != null) {
+            span.parentNode.removeChild(span);
+            info.className = "";
+        }
+    }
+
+    createImageTag() {
+        let monsterId = this.controller.monsterController.monsters.length;
+        let preview = document.getElementById(monsterId + " monster");
+        if(preview != null)
+        this.monsterPreviewDiv.removeChild(preview);
+
+        preview = document.createElement("IMG");
+        preview.id = monsterId + " monster";
+        preview.className = "tile";
+        preview.draggable = true;
+        preview.addEventListener("dragstart", this.drag);
+        preview.addEventListener("click", event => this.showMonsterProperties(event));
+
+        return preview;
+    }
+
+    previewFile() {
+        let preview = this.createImageTag();
+        let file = document.querySelector('input[type=file]').files[0];
+        let reader = new FileReader();
+
+        reader.onloadend = () => {
+            preview.src = reader.result;
+            this.controller.monsterController.updateMonster("monsterImage", preview.src);
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+        this.monsterPreviewDiv.appendChild(preview);
+    }
+
+    drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
     }
 
     resetMonsterCreator() {

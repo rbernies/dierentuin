@@ -3,9 +3,18 @@ import GridView from "../View/GridView"
 
 export default class GridController {
 
-    constructor(regionId, monsterController){
+    constructor(regionId, monsterController, configuratorController){
+        this.configuratorController = configuratorController;
         this.model = new GridModel(regionId);
         this.view = new GridView(this, monsterController);
+    }
+
+    resetConfigurator(){
+        this.configuratorController.resetConfigurator();
+    }
+
+    showMonsterProperties(event){
+        this.configuratorController.showMonsterProperties(event);
     }
 
     previewMonster(){
@@ -14,10 +23,6 @@ export default class GridController {
 
     getModel(){
         return this.model;
-    }
-
-    showMonsterProperties(monsterId){
-        this.view.showMonsterProperties(monsterId);
     }
 
     changeRegion(regionId){

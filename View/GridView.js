@@ -4,89 +4,8 @@ export default class GridView {
     constructor(controller, monsterController) {
         this.controller = controller;
         this.monsterController = monsterController;
-        this.monsterPreviewDiv = document.getElementById("monsterPreview");
-
         this.addRegionOptions();
         this.addGrid();
-    }
-
-    createImageTag() {
-        let monsterId = this.monsterController.monsters.length;
-        let preview = document.getElementById(monsterId + " monster");
-        if(preview != null)
-        this.monsterPreviewDiv.removeChild(preview);
-
-        preview = document.createElement("IMG");
-        preview.id = monsterId + " monster";
-        preview.className = "tile";
-        preview.draggable = true;
-        preview.addEventListener("dragstart", this.drag);
-        preview.addEventListener("click", event => this.showMonsterProperties(event));
-
-        return preview;
-    }
-
-    previewFile() {
-        let preview = this.createImageTag();
-        let file = document.querySelector('input[type=file]').files[0];
-        let reader = new FileReader();
-
-        reader.onloadend = () => {
-            preview.src = reader.result;
-            this.monsterController.updateMonster("monsterImage", preview.src);
-        }
-
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            preview.src = "";
-        }
-        this.monsterPreviewDiv.appendChild(preview);
-    }
-
-    showMonsterProperties(event) {
-        let ids = event.target.id.split(" ");
-        if (ids.length > 1) {
-            let monster = this.monsterController.monsters[ids[0]];
-            let div = document.getElementById(monster.position);
-            let monsterInfo = document.querySelector(".monsterInfo");
-
-            this.removeMonsterInfo();
-
-            if(monsterInfo != div){
-            let deleteButton = document.createElement("button");
-            deleteButton.innerHTML = "Delete Monster";
-            deleteButton.addEventListener("click", () => this.monsterController.removeMonster(monster.monsterId));
-
-            div.className = "monsterInfo";
-            let span = document.createElement("span");
-            span.className = "monsterInfoText";
-            span.innerHTML = "Name: " + monster.monsterName + "<br>" + "<br>"       
-            + "Type: " + monster.monsterType + "<br>" 
-            + "Amount of Arms: " + monster.armAmount + "<br>"
-            + "Type of Arms: " + monster.armType + "<br>"
-            + "Amount of Legs: " + monster.legAmount + "<br>"
-            + "Amount of Eyes: " + monster.eyeAmount + "<br>"
-            + "Type of Fur: " + monster.furType + "<br>"
-            + "Color: " + monster.color;
-            
-            span.appendChild(deleteButton);
-
-            div.appendChild(span);
-            let audio = new Audio(monster.audio);
-            audio.loop = false;
-            audio.play();
-            }            
-        }
-    }
-
-    removeMonsterInfo() {
-        let info = document.querySelector(".monsterInfo");
-        let span = document.querySelector(".monsterInfoText");
-        if (info != null) {
-            span.parentNode.removeChild(span);
-            info.className = "";
-        }
     }
 
     addRegionOptions() {
@@ -143,7 +62,7 @@ export default class GridView {
                 img.id = monsterId + " monster";
                 img.src = this.monsterController.monsters[i].image;
                 img.addEventListener("dragstart", this.drag);
-                img.addEventListener("click", event => this.showMonsterProperties(event));
+                img.addEventListener("click", event => this.controller.showMonsterProperties(event));
                 div.appendChild(img);
             }
         }
@@ -156,7 +75,11 @@ export default class GridView {
     drop(ev) {
         ev.preventDefault();
         let data = ev.dataTransfer.getData("text");
+        console.log(data);
+
         let monsterImg = document.getElementById(data);
+        console.log(monsterImg);
+
         ev.target.appendChild(monsterImg);
         console.log(data);
         let ids = data.split(" ");
@@ -167,10 +90,17 @@ export default class GridView {
             }
             this.monsterController.monsters[monsterId].position = ev.target.id;
             this.monsterController.saveToLocalStorage();
+            this.controller.resetConfigurator();
         }
     }
 
     drag(ev) {
+        let info = document.querySelector(".monsterInfo");
+        let span = document.querySelector(".monsterInfoText");
+        if (info != null) {
+            span.parentNode.removeChild(span);
+            info.className = "";
+        }
         ev.dataTransfer.setData("text", ev.target.id);
     }
 }
