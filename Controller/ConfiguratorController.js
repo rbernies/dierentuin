@@ -19,12 +19,16 @@ export default class ConfiguratorController {
         this.view.drawNextInputField(selector.id);    
     }
 
+    editMonster(monster){
+        this.monsterController.editMonster(monster);
+        this.view.loadMonsterOptions(this.monsterController.newMonster.monsterOptions, monster.monsterType);
+    }
+
     previewMonster(){
         this.gridController.previewMonster();
     }
 
     saveMonster() {
         this.monsterController.saveMonster();
-        this.view.resetMonsterCreator();
     }
 }

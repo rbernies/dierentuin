@@ -11,8 +11,12 @@ export default class GridView {
     }
 
     createImageTag() {
-        let preview = document.createElement("IMG");
         let monsterId = this.monsterController.monsters.length;
+        let preview = document.getElementById(monsterId + " monster");
+        if(preview != null)
+        this.monsterPreviewDiv.removeChild(preview);
+
+        preview = document.createElement("IMG");
         preview.id = monsterId + " monster";
         preview.className = "tile";
         preview.draggable = true;

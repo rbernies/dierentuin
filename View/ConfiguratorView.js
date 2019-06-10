@@ -18,18 +18,47 @@ export default class ConfiguratorView {
 
     drop(ev){
         ev.preventDefault();
-        console.log(this.controller.monsterController.monsters);
         let data = ev.dataTransfer.getData("text");
         let preview = document.getElementById(data);
         let ids = data.split(" ");
         if(ids.length > 1){
             let monster = this.controller.monsterController.monsters[ids[0]];
-            this.controller.monsterController.newMonster = monster;
+            this.controller.editMonster(monster);
+            this.editMonster(monster);
             //add all the right options based on the newMonster
             this.controller.monsterController.removeMonster(ids[0]);
             preview.id = this.controller.monsterController.monsters.length + " monster";
             ev.target.appendChild(preview);
         }
+    }
+
+    editMonster(monster){
+        document.getElementById("Type of Monster").value = monster.monsterType;
+        this.createNameField();
+        document.getElementById("monsterName").value = monster.monsterName;
+        this.drawNextInputField("monsterName");
+        if(monster.monsterType == "Fire" || monster.monsterType == "Water"){
+        document.getElementById("Amount of Arms").value = monster.armAmount;
+        this.drawNextInputField("Amount of Arms");
+        }
+        if(monster.monsterType != "Earth"){
+        document.getElementById("Type of Arms").value = monster.armType;
+        this.drawNextInputField("Type of Arms");
+        }
+        if(monster.monsterType != "Fire"){
+        document.getElementById("Amount of Legs").value = monster.legAmount;
+        this.drawNextInputField("Amount of Legs");
+        }
+        if(monster.monsterType == "Water" || monster.monsterType == "Fire"){
+        document.getElementById("Amount of Eyes").value = monster.eyeAmount;
+        this.drawNextInputField("Amount of Eyes");
+        }
+        document.getElementById("Type of Fur").value = monster.furType;
+        this.drawNextInputField("Type of Fur");
+        
+        let colorSelector = document.getElementById("Color");
+        colorSelector.value = monster.color;
+        this.createMonsterImageUploader(colorSelector);
     }
 
     loadMonsterOptions(monsterOptions, monsterType) {
@@ -122,7 +151,8 @@ export default class ConfiguratorView {
                 selector.appendChild(list);
             }
             if (lastElement) {
-                selector.onchange = () => this.createMonsterImageUploader(selector);
+                console.log(selector.selectedIndex);
+                selector.oninput = () => this.createMonsterImageUploader(selector);
             }
             else if (label === "Type of Monster") {
                 selector.onchange = () => this.controller.startMonsterCreation(selector.value);

@@ -36,6 +36,23 @@ export default class MonsterController {
         this.newMonster.updateMonster(option, value);
     }
 
+    editMonster(monster){
+        this.createNewMonster(monster.monsterType);
+        this.newMonster.monsterName = monster.monsterName;
+        this.newMonster.armAmount = monster.armAmount;
+        this.newMonster.armType = monster.armType;
+        this.newMonster.legAmount = monster.legAmount;
+        this.newMonster.eyeAmount = monster.eyeAmount;
+        this.newMonster.furType = monster.furType;
+        this.newMonster.color = monster.color;
+        this.newMonster.image = monster.image;
+        this.newMonster.canFly = monster.canFly;
+        this.newMonster.canSwim = monster.canSwim;
+        this.newMonster.position = monster.position;
+        this.newMonster.regionId = monster.regionId;
+        this.newMonster.monsterId = monster.monsterId;
+    }
+
     saveMonster() {
         let monsterId = this.monsters.length;
         this.newMonster.monsterId = monsterId;
