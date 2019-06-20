@@ -55,6 +55,19 @@ export default class MonsterController {
         this.saveToLocalStorage();
     }
 
+    detectMonsters(monsterId, columns){
+        let x = this.monsters[monsterId].position % columns;
+        let y = this.monsters[monsterId].position / columns;
+        
+        for(let i = 0; i < this.monsters.length; i++){
+            let xo = this.monsters[i].position % columns;
+            let yo = this.monsters[i].position / columns;
+            
+
+            //check length of distance 
+        }
+    }
+
     saveToLocalStorage(){
         localStorage.setItem("monsters", JSON.stringify(this.monsters));
     }
