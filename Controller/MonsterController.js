@@ -60,11 +60,18 @@ export default class MonsterController {
         let y = this.monsters[monsterId].position / columns;
         
         for(let i = 0; i < this.monsters.length; i++){
+            if(i == monsterId) continue;
+
             let xo = this.monsters[i].position % columns;
             let yo = this.monsters[i].position / columns;
-            
+            let xd = Math.abs(xo - x);
+            let yd = Math.abs(yo - y);
+            let distance = Math.sqrt(xd*xd + yd*yd);
 
-            //check length of distance 
+            console.log("distance: " + distance);
+            if(distance <= Math.sqrt(2)){
+                console.log("show pop-up with greeting");
+            }
         }
     }
 
