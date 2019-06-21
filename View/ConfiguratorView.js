@@ -23,6 +23,7 @@ export default class ConfiguratorView {
     drop(ev){
         ev.preventDefault();
         let data = ev.dataTransfer.getData("text");
+        if(ev.target.id == data) return;
         let preview = document.getElementById(data);
         let ids = data.split(" ");
         if(ids.length > 1){

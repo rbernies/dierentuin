@@ -82,8 +82,9 @@ export default class GridView {
 
     drop(ev) {
         ev.preventDefault();
-        if(!this.controller.getModel().isPlacableTile(ev.target.id)) return;
         let data = ev.dataTransfer.getData("text");
+        if(ev.target.id == data) return;
+        if(!this.controller.getModel().isPlacableTile(ev.target.id)) return;
         let monsterImg = document.getElementById(data);
         ev.target.appendChild(monsterImg);
         let ids = data.split(" ");
