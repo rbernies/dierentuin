@@ -63,9 +63,16 @@ export default class GridView {
                 img.src = this.monsterController.monsters[i].image;
                 img.addEventListener("dragstart", this.drag);
                 img.addEventListener("mouseover", event => this.controller.showMonsterProperties(event));
+                img.addEventListener("click", () => this.playSound(this.monsterController.monsters[i]));
                 div.appendChild(img);
             }
         }
+    }
+
+    playSound(monster){
+        let audio = new Audio(monster.audio);
+            audio.loop = false;
+            audio.play();
     }
 
     allowDrop(ev) {
