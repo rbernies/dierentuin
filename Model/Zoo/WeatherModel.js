@@ -7,20 +7,14 @@ export default class WeatherModel {
             return response.json();
         })
         .then((json) => {
-            //temperatuur -> > 25 graden -> fire + 10 , water - 10
-            //regen -> fire - 10, water + 10    
-            //wind -> turbovlieg functie, windstil gaat die amper vooruit en als t hard waait +10
-            //water spugen
             this.temperature = json.main.temp;
             this.wind = json.wind.speed;
             this.rain = (json.rain != undefined) ? true : false;
-            console.log(this);
         })
         .catch(err => {
             this.temperature = 0;
             this.wind = 0;
             this.rain = false;
-            console.log("error: " + err);
         });
 
         let map = {};
@@ -39,7 +33,6 @@ export default class WeatherModel {
         this.temperature = this.validate("Temperature: ", this.temperature);
         this.wind = this.validate("Wind speed: ", this.wind);
         this.rain = confirm("Rain: ", this.rain);
-        console.log(this);
     }
     
     validate(message, defaultVal){

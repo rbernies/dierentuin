@@ -25,7 +25,6 @@ export default class ConfiguratorView {
         if(ids.length > 1){
             let monster = this.controller.monsterController.monsters[ids[0]];
             this.controller.monsterController.newMonster = monster;
-            //add all the right options based on the newMonster
             this.controller.monsterController.removeMonster(ids[0]);
             preview.id = this.controller.monsterController.monsters.length + " monster";
             ev.target.appendChild(preview);
