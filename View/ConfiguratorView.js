@@ -221,29 +221,29 @@ export default class ConfiguratorView {
             let monsterInfo = document.querySelector(".monsterInfo");
 
             if(monsterInfo != monsterDiv){
-            let deleteButton = document.createElement("button");
-            deleteButton.innerHTML = "Delete Monster";
-            deleteButton.addEventListener("click", () => this.controller.monsterController.removeMonster(monster.monsterId));
+                let deleteButton = document.createElement("button");
+                deleteButton.innerHTML = "Delete Monster";
+                deleteButton.addEventListener("click", () => this.controller.monsterController.removeMonster(monster.monsterId));
 
-            monsterDiv.className = "monsterInfo";
-            let span = document.createElement("span");
-            span.className = "monsterInfoText";
-            span.innerHTML = "Name: " + monster.monsterName + "<br>" + "<br>"       
-            + "Type: " + monster.monsterType + "<br>" 
-            + "Amount of Arms: " + monster.armAmount + "<br>"
-            + "Type of Arms: " + monster.armType + "<br>"
-            + "Amount of Legs: " + monster.legAmount + "<br>"
-            + "Amount of Eyes: " + monster.eyeAmount + "<br>"
-            + "Type of Fur: " + monster.furType + "<br>"
-            + "Color: " + monster.color;
-            
-            span.appendChild(deleteButton);
+                monsterDiv.className = "monsterInfo";
+                let span = document.createElement("span");
+                span.className = "monsterInfoText";
+                span.innerHTML = "Name: " + monster.monsterName + "<br>" + "<br>"       
+                + "Type: " + monster.monsterType + "<br>" 
+                + "Amount of Arms: " + monster.armAmount + "<br>"
+                + "Type of Arms: " + monster.armType + "<br>"
+                + "Amount of Legs: " + monster.legAmount + "<br>"
+                + "Amount of Eyes: " + monster.eyeAmount + "<br>"
+                + "Type of Fur: " + monster.furType + "<br>"
+                + "Color: " + monster.color;
+                
+                span.appendChild(deleteButton);
 
-            monsterDiv.appendChild(span);
-            let audio = new Audio(monster.audio);
-            audio.loop = false;
-            audio.play();
-            }            
+                monsterDiv.appendChild(span);
+                let audio = new Audio(monster.audio);
+                audio.loop = false;
+                audio.play();
+            }
         }
     }
 
