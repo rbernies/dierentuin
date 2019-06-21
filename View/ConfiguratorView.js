@@ -8,8 +8,58 @@ export default class ConfiguratorView {
         this.monsterTypeSelectArea = document.getElementById("monsterTypeArea");
         this.configuratorDiv = document.getElementById("configuratorArea");
         this.imageChooserDiv = document.getElementById("imageChooser");
+        this.monsterPreviewDiv = document.getElementById("monsterPreview");
+
         this.drawnElements = [];
         this.createNewDropDown("Type of Monster", monsterTypes);
+
+        this.monsterPreview = document.getElementById("monsterPreview");
+        this.monsterPreview.addEventListener("drop", (ev) => { this.drop(ev); });
+        this.monsterPreview.addEventListener("dragover", (ev) => { ev.preventDefault(); });
+    }
+
+    drop(ev){
+        ev.preventDefault();
+        let data = ev.dataTransfer.getData("text");
+        let preview = document.getElementById(data);
+        let ids = data.split(" ");
+        if(ids.length > 1){
+            let monster = this.controller.monsterController.monsters[ids[0]];
+            this.controller.editMonster(monster);
+            this.editMonster(monster);
+            //add all the right options based on the newMonster
+            this.controller.monsterController.removeMonster(ids[0]);
+            preview.id = this.controller.monsterController.monsters.length + " monster";
+            ev.target.appendChild(preview);
+        }
+    }
+
+    editMonster(monster){
+        document.getElementById("Type of Monster").value = monster.monsterType;
+        document.getElementById("monsterName").value = monster.monsterName;
+        this.drawNextInputField("monsterName");
+        if(monster.monsterType == "Fire" || monster.monsterType == "Water"){
+        document.getElementById("Amount of Arms").value = monster.armAmount;
+        this.drawNextInputField("Amount of Arms");
+        }
+        if(monster.monsterType != "Earth"){
+        document.getElementById("Type of Arms").value = monster.armType;
+        this.drawNextInputField("Type of Arms");
+        }
+        if(monster.monsterType != "Fire"){
+        document.getElementById("Amount of Legs").value = monster.legAmount;
+        this.drawNextInputField("Amount of Legs");
+        }
+        if(monster.monsterType == "Water" || monster.monsterType == "Fire"){
+        document.getElementById("Amount of Eyes").value = monster.eyeAmount;
+        this.drawNextInputField("Amount of Eyes");
+        }
+        document.getElementById("Type of Fur").value = monster.furType;
+        this.drawNextInputField("Type of Fur");
+
+        let colorSelector = document.getElementById("Color");
+        colorSelector.value = monster.color;
+        this.createMonsterImageUploader(colorSelector);
     }
 
     loadMonsterOptions(monsterOptions, monsterType) {
@@ -62,29 +112,17 @@ export default class ConfiguratorView {
         this.controller.updateMonster(selector);
 
         if (!this.fileChooserVisible) {
-            let monsterImage = document.createElement("input");
+            let monsterImage = document.createElement("input");    
+
             monsterImage.setAttribute("id", "monsterImage");
             monsterImage.setAttribute("type", "file");
             let nameLabel = document.createElement("Label");
             nameLabel.setAttribute("for", monsterImage);
             nameLabel.innerHTML = "Upload your Monster";
-            monsterImage.onchange = () => this.drawSaveMonsterButton(monsterImage);
+            monsterImage.onchange = () => this.previewFile();
             this.imageChooserDiv.appendChild(nameLabel);
             this.imageChooserDiv.appendChild(monsterImage);
             this.fileChooserVisible = true;
-        }
-    }
-
-    drawSaveMonsterButton(monsterImage) {
-        this.controller.updateMonster(monsterImage);
-        if (!this.saveMonsterButtonVisible) {
-            let button = document.createElement("button");
-            button.type = "button";
-            button.className = "btn btn-primary";
-            button.appendChild(document.createTextNode("Make my Beast!"));
-            button.onclick = () => this.controller.saveMonster();
-            this.imageChooserDiv.appendChild(button);
-            this.saveMonsterButtonVisible = true;
         }
     }
 
@@ -114,7 +152,7 @@ export default class ConfiguratorView {
                 selector.appendChild(list);
             }
             if (lastElement) {
-                selector.onchange = () => this.createMonsterImageUploader(selector);;
+                selector.onchange = () => this.createMonsterImageUploader(selector);
             }
             else if (label === "Type of Monster") {
                 selector.onchange = () => this.controller.startMonsterCreation(selector.value);
@@ -165,6 +203,92 @@ export default class ConfiguratorView {
                 list.appendChild(option);
                 legSelector.appendChild(list);
                 }
+    }
+
+    showMonsterProperties(event) {
+        let ids = event.target.id.split(" ");
+        if (ids.length > 1) {
+            let monster = this.controller.monsterController.monsters[ids[0]];
+            if(monster == null)
+            return;
+
+            let div = document.getElementById(monster.position);
+            let monsterInfo = document.querySelector(".monsterInfo");
+
+            this.removeMonsterInfo();
+
+            if(monsterInfo != div){
+            let deleteButton = document.createElement("button");
+            deleteButton.innerHTML = "Delete Monster";
+            deleteButton.addEventListener("click", () => this.controller.monsterController.removeMonster(monster.monsterId));
+
+            div.className = "monsterInfo";
+            let span = document.createElement("span");
+            span.className = "monsterInfoText";
+            span.innerHTML = "Name: " + monster.monsterName + "<br>" + "<br>"       
+            + "Type: " + monster.monsterType + "<br>" 
+            + "Amount of Arms: " + monster.armAmount + "<br>"
+            + "Type of Arms: " + monster.armType + "<br>"
+            + "Amount of Legs: " + monster.legAmount + "<br>"
+            + "Amount of Eyes: " + monster.eyeAmount + "<br>"
+            + "Type of Fur: " + monster.furType + "<br>"
+            + "Color: " + monster.color;
+            
+            span.appendChild(deleteButton);
+
+            div.appendChild(span);
+            let audio = new Audio(monster.audio);
+            audio.loop = false;
+            audio.play();
+            }            
+        }
+    }
+
+    removeMonsterInfo() {
+        let info = document.querySelector(".monsterInfo");
+        let span = document.querySelector(".monsterInfoText");
+        if (info != null) {
+            span.parentNode.removeChild(span);
+            info.className = "";
+        }
+    }
+
+    createImageTag() {
+        let monsterId = this.controller.monsterController.monsters.length;
+        let preview = document.getElementById(monsterId + " monster");
+        if(preview != null)
+        this.monsterPreviewDiv.removeChild(preview);
+
+        preview = document.createElement("IMG");
+        preview.id = monsterId + " monster";
+        preview.className = "tile";
+        preview.draggable = true;
+        preview.addEventListener("dragstart", this.drag);
+        preview.addEventListener("click", event => this.showMonsterProperties(event));
+
+        return preview;
+    }
+
+    previewFile() {
+        let preview = this.createImageTag();
+        let file = document.querySelector('input[type=file]').files[0];
+        let reader = new FileReader();
+
+        reader.onloadend = () => {
+            preview.src = reader.result;
+            this.controller.monsterController.updateMonster("monsterImage", preview.src);
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+        this.monsterPreviewDiv.appendChild(preview);
+    }
+
+    drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
     }
 
     resetMonsterCreator() {

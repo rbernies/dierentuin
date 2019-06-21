@@ -14,6 +14,7 @@ export default class WaterMonsterModel extends MonsterProperties {
 
         this.monsterType = "Water";
         this.canSwim = true;
+        this.audio = "Resources/sounds/WaterMonster.wav";
     }
 
 

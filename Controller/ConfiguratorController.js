@@ -13,13 +13,25 @@ export default class ConfiguratorController {
         this.view.loadMonsterOptions(this.monsterController.newMonster.monsterOptions, monsterType);
     }
 
-    updateMonster(selector) {
+    showMonsterProperties(event){
+        this.view.showMonsterProperties(event);
+    }
+
+    resetConfigurator(){
+        this.view.resetMonsterCreator();
+    }
+
+    updateMonster(selector) { 
         this.monsterController.updateMonster(selector.id, selector.value);
-        this.view.drawNextInputField(selector.id);
+        this.view.drawNextInputField(selector.id);    
+    }
+
+    editMonster(monster){
+        this.monsterController.editMonster(monster);
+        this.view.loadMonsterOptions(this.monsterController.newMonster.monsterOptions, monster.monsterType);
     }
 
     saveMonster() {
         this.monsterController.saveMonster();
-        this.view.resetMonsterCreator();
     }
 }
