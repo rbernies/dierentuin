@@ -61,18 +61,14 @@ export default class MonsterController {
         this.saveToLocalStorage();
     }
 
-    test(){
-        console.log("hi");
-    }
-
     removeMonster(id) {
+        let img = document.getElementById(id + " monster");
+        img.remove();
         this.monsters.splice(id, 1);
-        //remove img from monster
         for(let i = id; i < this.monsters.length; i++){
             this.monsters[i].monsterId = i;
             let img = document.getElementById(parseInt(i+1) + " monster");
             if(img) img.id = i + " monster";
-            else console.log("image is null " + parseInt(i+1) + " monster");
         }
         this.saveToLocalStorage();
     }
@@ -90,9 +86,8 @@ export default class MonsterController {
             let yd = Math.abs(yo - y);
             let distance = Math.sqrt(xd*xd + yd*yd);
 
-            console.log("distance: " + distance);
             if(distance <= Math.sqrt(2)){
-                console.log("show pop-up with greeting");
+                
             }
         }
     }
