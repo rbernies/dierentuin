@@ -1,7 +1,11 @@
 export default class WeatherModel {
 
-    constructor(country) {
+    constructor(monsterController, country) {
         const APPID = "5ce98ff491403bc50cc78dc29975e9e4";
+        this.temperature = 0;
+        this.wind = 0;
+        this.rain = false;
+        this.monsterController = monsterController;
         fetch("http://api.openweathermap.org/data/2.5/weather?q=" + country + "&APPID=" + APPID + "&units=metric")
         .then(function(response){
             return response.json();
@@ -10,6 +14,7 @@ export default class WeatherModel {
             this.temperature = json.main.temp;
             this.wind = json.wind.speed;
             this.rain = (json.rain != undefined) ? true : false;
+            this.monsterController.setWeatherProps({temperature: this.temperature, wind: this.wind, rain: this.rain});
         })
         .catch(err => {
             this.temperature = 0;
@@ -33,6 +38,7 @@ export default class WeatherModel {
         this.temperature = this.validate("Temperature: ", this.temperature);
         this.wind = this.validate("Wind speed: ", this.wind);
         this.rain = confirm("Rain: ", this.rain);
+        this.monsterController.setWeatherProps({temperature: this.temperature, wind: this.wind, rain: this.rain});
     }
     
     validate(message, defaultVal){

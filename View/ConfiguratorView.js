@@ -1,4 +1,8 @@
 import DrawMonsterView from "./DrawMonsterView";
+import EarthMonsterModel from "../Model/Monsters/EarthMonsterModel";
+import WaterMonsterModel from "../Model/Monsters/WaterMonsterModel";
+import WindMonsterModel from "../Model/Monsters/WindMonsterModel";
+import FireMonsterModel from "../Model/Monsters/FireMonsterModel";
 
 export default class ConfiguratorView {
 
@@ -204,6 +208,7 @@ export default class ConfiguratorView {
             return;
 
             let monsterDiv = document.getElementById(monster.position);
+            let span = null;
 
             if(!monsterDiv.className.includes("monsterInfo")){
                 let deleteButton = document.createElement("button");
@@ -211,20 +216,38 @@ export default class ConfiguratorView {
                 deleteButton.addEventListener("click", () => this.controller.monsterController.removeMonster(monster.monsterId));
 
                 monsterDiv.className += " monsterInfo";
-                let span = document.createElement("span");
+                span = document.createElement("span");
                 span.className = "monsterInfoText";
-                span.innerHTML = "Name: " + monster.monsterName + "<br>" + "<br>"       
+                span.appendChild(deleteButton);
+                monsterDiv.appendChild(span);   
+            }else{
+                span = document.getElementById(monster.position).querySelector(".monsterInfoText");
+            }
+
+            if(span){
+                let factor = 1.0;
+                let wProps = this.controller.monsterController.getWeatherProps();
+                if(monster.monsterType == "Earth"){
+                    factor = wProps.earthFactor;
+                }else if(monster.monsterType == "Water"){
+                    factor = wProps.waterFactor;
+                }else if(monster.monsterType == "Wind"){
+                    factor = wProps.windFactor;
+                }else if(monster.monsterType == "Fire"){
+                    factor = wProps.fireFactor;
+                }
+
+                span.innerHTML = "Name: " + monster.monsterName + "<br>"     
                 + "Type: " + monster.monsterType + "<br>" 
                 + "Amount of Arms: " + monster.armAmount + "<br>"
                 + "Type of Arms: " + monster.armType + "<br>"
                 + "Amount of Legs: " + monster.legAmount + "<br>"
                 + "Amount of Eyes: " + monster.eyeAmount + "<br>"
                 + "Type of Fur: " + monster.furType + "<br>"
-                + "Color: " + monster.color;
-                
-                span.appendChild(deleteButton);
-                monsterDiv.appendChild(span);   
-            } 
+                + "Color: " + monster.color + "<br>"
+                + "Special Power: " + (monster.specialPower*factor).toFixed(2);
+                if(factor > 1.0) span.innerHTML += " (+" + (factor*100 - 100).toFixed(0) + "%)";
+            }
         }
     }
 

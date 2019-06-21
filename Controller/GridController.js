@@ -5,7 +5,7 @@ export default class GridController {
 
     constructor(regionId, monsterController, configuratorController){
         this.configuratorController = configuratorController;
-        this.model = new GridModel(regionId);
+        this.model = new GridModel(monsterController, regionId);
         this.view = new GridView(this, monsterController);
     }
 

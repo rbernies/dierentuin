@@ -12,6 +12,20 @@ export default class MonsterController {
         
         this.monsterTypes = ["Water", "Fire", "Earth", "Wind"];
         this.regionId = 0;
+        this.weatherProps = {fireFactor: 1.0, windFactor: 1.0, rainFactor: 1.0, earthFactor: 1.0};
+    }
+
+    getWeatherProps(){
+        return this.weatherProps;
+    }
+
+    setWeatherProps(props){
+        this.weatherProps = {fireFactor: 1.0, windFactor: 1.0, rainFactor: 1.0, earthFactor: 1.0};
+        if(props.temperature > 25) this.weatherProps.fireFactor = 1.1;
+        if(props.wind > 5) this.weatherProps.windFactor = 1.1; 
+        if(props.rain) this.weatherProps.rainFactor = 1.1;
+        if(props.wind <= 0 && props.temperature >= 30) this.weatherProps.earthFactor = 1.1;
+        console.log(this.weatherProps);
     }
 
     createNewMonster(monsterType) {
@@ -62,7 +76,7 @@ export default class MonsterController {
     }
 
     removeMonster(id) {
-        let div = document.getElementById(id);
+        let div = document.getElementById(this.monsters[id].position);
         let children = div.childNodes;
         for(let i = 0; i < children.length; i++)
             children[i].remove();
@@ -76,12 +90,12 @@ export default class MonsterController {
         this.saveToLocalStorage();
     }
 
-    detectMonsters(monsterId, columns, callbackGreet){
+    detectMonsters(monsterId, columns, regionId, callbackGreet){
         let x = this.monsters[monsterId].position % columns;
         let y = Math.floor(this.monsters[monsterId].position / columns);
         
         for(let i = 0; i < this.monsters.length; i++){
-            if(i == monsterId) continue;
+            if(i == monsterId || this.monsters[i].regionId != regionId) continue;
 
             let xo = this.monsters[i].position % columns;
             let yo = Math.floor(this.monsters[i].position / columns);

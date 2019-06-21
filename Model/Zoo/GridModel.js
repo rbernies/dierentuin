@@ -1,12 +1,13 @@
 import WeatherModel from "./WeatherModel"
 
 export default class GridModel {
-    
-    constructor(regionId){
+
+    constructor(monsterController, regionId){
         this.regionId = regionId;
         this.columns = 10;
         this.rows = 10;
         this.regions = JSON.parse(regionData);
+        this.monsterController = monsterController;
         this.loadRegion(regionId);
     }
     
@@ -16,7 +17,7 @@ export default class GridModel {
         this.columns = region.grid[0].Columns.length;
         this.rows = region.grid.length;
 
-        this.weatherModel = new WeatherModel(region["reference city"]);
+        this.weatherModel = new WeatherModel(this.monsterController, region["reference city"]);
     }
 
     isPlacableTile(tileId){

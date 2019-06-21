@@ -16,5 +16,8 @@ export default class MonsterProperties{
         this.position = 0;
         this.monsterId = 0;
         this.regionId = 0;
+
+        this.specialPower = 4 + Math.floor(Math.random() * 7);
+        console.log(this.specialPower);
     }
 }

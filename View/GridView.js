@@ -94,7 +94,7 @@ export default class GridView {
                 this.monsterController.saveMonster();
             }
             this.monsterController.monsters[monsterId].position = ev.target.id;
-            this.monsterController.detectMonsters(monsterId, this.controller.getModel().columns, this.addGreeting);
+            this.monsterController.detectMonsters(monsterId, this.controller.getModel().columns, this.controller.getModel().getRegionId(), this.addGreeting);
             this.monsterController.saveToLocalStorage();
             this.controller.resetConfigurator();
         }
