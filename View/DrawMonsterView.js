@@ -45,8 +45,8 @@ export default class DrawMonsterView {
 
     mouseDown(e) {
         this.rect = this.canvasDiv.getBoundingClientRect();
-        this.mouseX = e.pageX - this.rect.left;
-        this.mouseY = e.pageY - this.rect.top;
+        this.mouseX = e.clientX - this.rect.left;
+        this.mouseY = e.clientY - this.rect.top;
         this.paint = true;
         this.addClick(this.mouseX, this.mouseY);
         this.redraw();
@@ -54,7 +54,7 @@ export default class DrawMonsterView {
 
     mouseMove(e) {
         if (this.paint) {
-            this.addClick(e.pageX - this.rect.left, e.pageY - this.rect.top, true);
+            this.addClick(e.clientX - this.rect.left, e.clientY - this.rect.top, true);
             this.redraw();
         }
     }
