@@ -47,7 +47,6 @@ export default class WeatherModel {
         let temp = parseFloat(text);
         while(!temp || temp.toString().length != text.length){
             alert("You need to provide a valid (decimal) number, separated with a '.', or click 'Cancel' to skip.");
-            console.log(temp.toString().length + ", " + text.length);
             text = prompt(message, defaultVal);
             if(text === null) return defaultVal;
             temp = parseFloat(text);

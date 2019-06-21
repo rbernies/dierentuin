@@ -8,7 +8,6 @@ export default class MonsterController {
     constructor() {
         this.monsters = JSON.parse(localStorage.getItem("monsters"));
         if(!this.monsters) this.monsters = [];
-        console.log(this.monsters);
         
         this.monsterTypes = ["Water", "Fire", "Earth", "Wind"];
         this.regionId = 0;
@@ -25,7 +24,6 @@ export default class MonsterController {
         if(props.wind > 5) this.weatherProps.windFactor = 1.1; 
         if(props.rain) this.weatherProps.rainFactor = 1.1;
         if(props.wind <= 0 && props.temperature >= 30) this.weatherProps.earthFactor = 1.1;
-        console.log(this.weatherProps);
     }
 
     createNewMonster(monsterType) {
