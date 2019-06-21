@@ -110,6 +110,9 @@ export default class ConfiguratorView {
 
     createDrawingCanvas(selector){
         this.controller.updateMonster(selector);
+        while (this.canvasDiv.firstChild) {
+            this.canvasDiv.removeChild(this.canvasDiv.firstChild);
+        }
         this.drawMonsterView = new DrawMonsterView(this.canvasDiv, this);
     }
 
