@@ -8,6 +8,7 @@ export default class MonsterController {
     constructor() {
         this.monsters = JSON.parse(localStorage.getItem("monsters"));
         if(!this.monsters) this.monsters = [];
+        console.log(this.monsters);
         
         this.monsterTypes = ["Water", "Fire", "Earth", "Wind"];
         this.regionId = 0;
@@ -61,8 +62,11 @@ export default class MonsterController {
     }
 
     removeMonster(id) {
-        let img = document.getElementById(id + " monster");
-        img.remove();
+        let div = document.getElementById(id);
+        let children = div.childNodes;
+        for(let i = 0; i < children.length; i++)
+            children[i].remove();
+
         this.monsters.splice(id, 1);
         for(let i = id; i < this.monsters.length; i++){
             this.monsters[i].monsterId = i;

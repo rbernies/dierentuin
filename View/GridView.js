@@ -125,7 +125,7 @@ export default class GridView {
     }
 
     drag(ev) {
-        if(ev.target.parentNode.id){
+        if(ev.target.parentNode.id != "monsterPreview"){
             let info = document.getElementById(ev.target.parentNode.id);
             let span = info.querySelectorAll("span");
             if (info) {

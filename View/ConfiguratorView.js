@@ -110,6 +110,9 @@ export default class ConfiguratorView {
 
     createDrawingCanvas(selector){
         this.controller.updateMonster(selector);
+        while (this.canvasDiv.firstChild) {
+            this.canvasDiv.removeChild(this.canvasDiv.firstChild);
+        }
         this.drawMonsterView = new DrawMonsterView(this.canvasDiv, this);
     }
 
@@ -253,6 +256,17 @@ export default class ConfiguratorView {
     }
 
     drag(ev) {
+        if(ev.target.parentNode.id != "monsterPreview"){
+            let info = document.getElementById(ev.target.parentNode.id);
+            let span = info.querySelectorAll("span");
+            if (info) {
+                if(span){
+                    for(let i = 0; i < span.length; i++)
+                        info.removeChild(span[i]);
+                }
+                info.className = "";
+            }
+        }
         ev.dataTransfer.setData("text", ev.target.id);
     }
 
