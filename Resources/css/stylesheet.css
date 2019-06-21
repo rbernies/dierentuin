@@ -64,6 +64,10 @@
     height: 100%;
 }
 
+#canvas {
+    border: 2px solid black;
+}   
+
 .monsterInfo:hover .monsterInfoText {
     visibility: visible;
 }

@@ -6,7 +6,6 @@ import WindMonsterModel from "../Model/Monsters/WindMonsterModel";
 export default class MonsterController {
 
     constructor() {
-        console.log(JSON.parse(localStorage.getItem("monsters")));
         this.monsters = JSON.parse(localStorage.getItem("monsters"));
         if(!this.monsters) this.monsters = [];
         

@@ -1,3 +1,5 @@
+import DrawMonsterView from "./DrawMonsterView";
+
 export default class ConfiguratorView {
 
     constructor(controller, monsterTypes) {
@@ -7,7 +9,7 @@ export default class ConfiguratorView {
         this.monsterTypes = monsterTypes;
         this.monsterTypeSelectArea = document.getElementById("monsterTypeArea");
         this.configuratorDiv = document.getElementById("configuratorArea");
-        this.imageChooserDiv = document.getElementById("imageChooser");
+        this.canvasDiv = document.getElementById("canvasDiv");
         this.monsterPreviewDiv = document.getElementById("monsterPreview");
 
         this.drawnElements = [];
@@ -58,7 +60,7 @@ export default class ConfiguratorView {
 
         let colorSelector = document.getElementById("Color");
         colorSelector.value = monster.color;
-        this.createMonsterImageUploader(colorSelector);
+        this.createDrawingCanvas(colorSelector);
     }
 
     loadMonsterOptions(monsterOptions, monsterType) {
@@ -93,7 +95,6 @@ export default class ConfiguratorView {
                 return;
             }
         }
-
         let last = false;
         if (this.monsterOptions.length == 1) {
             last = true;
@@ -109,26 +110,7 @@ export default class ConfiguratorView {
 
     createDrawingCanvas(selector){
         this.controller.updateMonster(selector);
-
-        this.imageChooserDiv.appendChild(document.createElement("canvas"));
-    }
-
-    createMonsterImageUploader(selector) {
-        this.controller.updateMonster(selector);
-
-        if (!this.fileChooserVisible) {
-            let monsterImage = document.createElement("input");    
-
-            monsterImage.setAttribute("id", "monsterImage");
-            monsterImage.setAttribute("type", "file");
-            let nameLabel = document.createElement("Label");
-            nameLabel.setAttribute("for", monsterImage);
-            nameLabel.innerHTML = "Upload your Monster";
-            monsterImage.onchange = () => this.previewFile();
-            this.imageChooserDiv.appendChild(nameLabel);
-            this.imageChooserDiv.appendChild(monsterImage);
-            this.fileChooserVisible = true;
-        }
+        this.drawMonsterView = new DrawMonsterView(this.canvasDiv, this);
     }
 
     createNewDropDown(label, value, lastElement) {
@@ -157,7 +139,7 @@ export default class ConfiguratorView {
                 selector.appendChild(list);
             }
             if (lastElement) {
-                selector.onchange = () => this.createMonsterImageUploader(selector);
+                selector.onchange = () => this.createDrawingCanvas(selector);
             }
             else if (label === "Type of Monster") {
                 selector.onchange = () => this.controller.startMonsterCreation(selector.value);
@@ -263,21 +245,10 @@ export default class ConfiguratorView {
         return preview;
     }
 
-    previewFile() {
+    previewMonsterDrawing(monsterDrawing) {
         let preview = this.createImageTag();
-        let file = document.querySelector('input[type=file]').files[0];
-        let reader = new FileReader();
-
-        reader.onloadend = () => {
-            preview.src = reader.result;
-            this.controller.monsterController.updateMonster("monsterImage", preview.src);
-        }
-
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            preview.src = "";
-        }
+        preview.src = monsterDrawing;
+        this.controller.monsterController.updateMonster("monsterImage", preview.src);
         this.monsterPreviewDiv.appendChild(preview);
     }
 
@@ -292,8 +263,8 @@ export default class ConfiguratorView {
         while (this.configuratorDiv.firstChild) {
             this.configuratorDiv.removeChild(this.configuratorDiv.firstChild);
         }
-        while (this.imageChooserDiv.firstChild) {
-            this.imageChooserDiv.removeChild(this.imageChooserDiv.firstChild);
+        while (this.canvasDiv.firstChild) {
+            this.canvasDiv.removeChild(this.canvasDiv.firstChild);
         }
     }
 }
