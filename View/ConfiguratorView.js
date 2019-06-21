@@ -108,6 +108,12 @@ export default class ConfiguratorView {
         this.drawnElements.push(selectorid);
     }
 
+    createDrawingCanvas(selector){
+        this.controller.updateMonster(selector);
+
+        this.imageChooserDiv.appendChild(document.createElement("canvas"));
+    }
+
     createMonsterImageUploader(selector) {
         this.controller.updateMonster(selector);
 
@@ -212,17 +218,15 @@ export default class ConfiguratorView {
             if(monster == null)
             return;
 
-            let div = document.getElementById(monster.position);
+            let monsterDiv = document.getElementById(monster.position);
             let monsterInfo = document.querySelector(".monsterInfo");
 
-            this.removeMonsterInfo();
-
-            if(monsterInfo != div){
+            if(monsterInfo != monsterDiv){
             let deleteButton = document.createElement("button");
             deleteButton.innerHTML = "Delete Monster";
             deleteButton.addEventListener("click", () => this.controller.monsterController.removeMonster(monster.monsterId));
 
-            div.className = "monsterInfo";
+            monsterDiv.className = "monsterInfo";
             let span = document.createElement("span");
             span.className = "monsterInfoText";
             span.innerHTML = "Name: " + monster.monsterName + "<br>" + "<br>"       
@@ -236,20 +240,11 @@ export default class ConfiguratorView {
             
             span.appendChild(deleteButton);
 
-            div.appendChild(span);
+            monsterDiv.appendChild(span);
             let audio = new Audio(monster.audio);
             audio.loop = false;
             audio.play();
             }            
-        }
-    }
-
-    removeMonsterInfo() {
-        let info = document.querySelector(".monsterInfo");
-        let span = document.querySelector(".monsterInfoText");
-        if (info != null) {
-            span.parentNode.removeChild(span);
-            info.className = "";
         }
     }
 
@@ -264,7 +259,7 @@ export default class ConfiguratorView {
         preview.className = "tile";
         preview.draggable = true;
         preview.addEventListener("dragstart", this.drag);
-        preview.addEventListener("click", event => this.showMonsterProperties(event));
+        preview.addEventListener("mouseover", event => this.showMonsterProperties(event));
 
         return preview;
     }

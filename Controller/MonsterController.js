@@ -77,6 +77,11 @@ export default class MonsterController {
     }
 
     saveToLocalStorage(){
-        localStorage.setItem("monsters", JSON.stringify(this.monsters));
+        try{
+            localStorage.setItem("monsters", JSON.stringify(this.monsters));
+
+        } catch(error) {
+            return false;
+        }
     }
 }

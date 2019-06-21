@@ -64,8 +64,12 @@
     height: 100%;
 }
 
+.monsterInfo:hover .monsterInfoText {
+    visibility: visible;
+  }
 
 .monsterInfo .monsterInfoText {
+    visibility: hidden;
     width: 150px;
     background-color: rgb(0, 0, 0);
     color: rgb(24, 161, 11);
