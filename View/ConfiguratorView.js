@@ -238,13 +238,15 @@ export default class ConfiguratorView {
             + "Color: " + monster.color;
             
             span.appendChild(deleteButton);
-
             monsterDiv.appendChild(span);
-            let audio = new Audio(monster.audio);
-            audio.loop = false;
-            audio.play();
             }            
         }
+    }
+
+    playSound(monster){
+        let audio = new Audio(monster.audio);
+        audio.loop = false;
+        audio.play();
     }
 
     createImageTag() {
@@ -252,14 +254,13 @@ export default class ConfiguratorView {
         let preview = document.getElementById(monsterId + " monster");
         if(preview != null)
         this.monsterPreviewDiv.removeChild(preview);
-
         preview = document.createElement("IMG");
         preview.id = monsterId + " monster";
         preview.className = "tile";
         preview.draggable = true;
         preview.addEventListener("dragstart", this.drag);
         preview.addEventListener("mouseover", event => this.showMonsterProperties(event));
-
+        preview.addEventListener("click", () => this.playSound(this.controller.monsterController.monsters[monsterId]));
         return preview;
     }
 
