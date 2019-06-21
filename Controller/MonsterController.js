@@ -61,19 +61,35 @@ export default class MonsterController {
         this.saveToLocalStorage();
     }
 
-    test(){
-        console.log("hi");
-    }
-
     removeMonster(id) {
+        let img = document.getElementById(id + " monster");
+        img.remove();
         this.monsters.splice(id, 1);
         for(let i = id; i < this.monsters.length; i++){
             this.monsters[i].monsterId = i;
             let img = document.getElementById(parseInt(i+1) + " monster");
             if(img) img.id = i + " monster";
-            else console.log("image is null " + parseInt(i+1) + " monster");
         }
         this.saveToLocalStorage();
+    }
+
+    detectMonsters(monsterId, columns){
+        let x = this.monsters[monsterId].position % columns;
+        let y = this.monsters[monsterId].position / columns;
+        
+        for(let i = 0; i < this.monsters.length; i++){
+            if(i == monsterId) continue;
+
+            let xo = this.monsters[i].position % columns;
+            let yo = this.monsters[i].position / columns;
+            let xd = Math.abs(xo - x);
+            let yd = Math.abs(yo - y);
+            let distance = Math.sqrt(xd*xd + yd*yd);
+
+            if(distance <= Math.sqrt(2)){
+                
+            }
+        }
     }
 
     saveToLocalStorage(){

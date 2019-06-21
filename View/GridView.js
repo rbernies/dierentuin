@@ -75,13 +75,8 @@ export default class GridView {
     drop(ev) {
         ev.preventDefault();
         let data = ev.dataTransfer.getData("text");
-        console.log(data);
-
         let monsterImg = document.getElementById(data);
-        console.log(monsterImg);
-
         ev.target.appendChild(monsterImg);
-        console.log(data);
         let ids = data.split(" ");
         if (ids.length > 1) {
             let monsterId = ids[0];
@@ -89,6 +84,7 @@ export default class GridView {
                 this.monsterController.saveMonster();
             }
             this.monsterController.monsters[monsterId].position = ev.target.id;
+            this.monsterController.detectMonsters(monsterId, this.controller.getModel().columns);
             this.monsterController.saveToLocalStorage();
             this.controller.resetConfigurator();
         }
