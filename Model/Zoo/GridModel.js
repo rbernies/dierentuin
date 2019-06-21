@@ -19,6 +19,13 @@ export default class GridModel {
         this.weatherModel = new WeatherModel(region["reference city"]);
     }
 
+    isPlacableTile(tileId){
+        let region = this.getCurrentRegion();
+        let x = tileId % this.columns;
+        let y = Math.floor(tileId / this.columns);
+        return region.grid[y].Columns[x] == 1 ? false : true;
+    }
+
     getCurrentRegion(){
         return this.regions[this.regionId];
     }

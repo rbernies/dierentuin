@@ -218,14 +218,13 @@ export default class ConfiguratorView {
             return;
 
             let monsterDiv = document.getElementById(monster.position);
-            let monsterInfo = document.querySelector(".monsterInfo");
 
-            if(monsterInfo != monsterDiv){
+            if(!monsterDiv.className.includes("monsterInfo")){
                 let deleteButton = document.createElement("button");
                 deleteButton.innerHTML = "Delete Monster";
                 deleteButton.addEventListener("click", () => this.controller.monsterController.removeMonster(monster.monsterId));
 
-                monsterDiv.className = "monsterInfo";
+                monsterDiv.className += " monsterInfo";
                 let span = document.createElement("span");
                 span.className = "monsterInfoText";
                 span.innerHTML = "Name: " + monster.monsterName + "<br>" + "<br>"       
@@ -238,8 +237,8 @@ export default class ConfiguratorView {
                 + "Color: " + monster.color;
                 
                 span.appendChild(deleteButton);
-                monsterDiv.appendChild(span);
-            }            
+                monsterDiv.appendChild(span);   
+            } 
         }
     }
 

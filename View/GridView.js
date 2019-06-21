@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "crypto";
 
 export default class GridView {
 
@@ -81,6 +82,7 @@ export default class GridView {
 
     drop(ev) {
         ev.preventDefault();
+        if(!this.controller.getModel().isPlacableTile(ev.target.id)) return;
         let data = ev.dataTransfer.getData("text");
         let monsterImg = document.getElementById(data);
         ev.target.appendChild(monsterImg);
@@ -91,18 +93,48 @@ export default class GridView {
                 this.monsterController.saveMonster();
             }
             this.monsterController.monsters[monsterId].position = ev.target.id;
-            this.monsterController.detectMonsters(monsterId, this.controller.getModel().columns);
+            this.monsterController.detectMonsters(monsterId, this.controller.getModel().columns, this.addGreeting);
             this.monsterController.saveToLocalStorage();
             this.controller.resetConfigurator();
         }
     }
 
+    addGreeting(monster, name){
+        if(monster == null) return;
+        let monsterDiv = document.getElementById(monster.position);
+        let span = null;
+
+        if(!monsterDiv.className.includes("greeting")){
+            monsterDiv.className += " greeting";
+            span = document.createElement("span");
+            span.className = "greetingText";
+            monsterDiv.appendChild(span);   
+        }
+
+        if(!span) span = document.getElementById(monster.position).querySelectorAll(".greetingText");
+        if(span) span.innerHTML = "Hi " + name + "!";
+
+        setTimeout(() => {
+            if(span) {
+                if(span.parentNode){
+                    span.parentNode.classList.remove("greeting");
+                    span.remove();
+                }
+            }
+        }, 2000);
+    }
+
     drag(ev) {
-        let info = document.querySelector(".monsterInfo");
-        let span = document.querySelector(".monsterInfoText");
-        if (info != null) {
-            span.parentNode.removeChild(span);
-            info.className = "";
+        if(ev.target.parentNode.id){
+            let info = document.getElementById(ev.target.parentNode.id);
+            let span = info.querySelectorAll("span");
+            if (info) {
+                if(span){
+                    for(let i = 0; i < span.length; i++)
+                        info.removeChild(span[i]);
+                }
+                info.className = "";
+            }
         }
         ev.dataTransfer.setData("text", ev.target.id);
     }

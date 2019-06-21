@@ -73,21 +73,22 @@ export default class MonsterController {
         this.saveToLocalStorage();
     }
 
-    detectMonsters(monsterId, columns){
+    detectMonsters(monsterId, columns, callbackGreet){
         let x = this.monsters[monsterId].position % columns;
-        let y = this.monsters[monsterId].position / columns;
+        let y = Math.floor(this.monsters[monsterId].position / columns);
         
         for(let i = 0; i < this.monsters.length; i++){
             if(i == monsterId) continue;
 
             let xo = this.monsters[i].position % columns;
-            let yo = this.monsters[i].position / columns;
+            let yo = Math.floor(this.monsters[i].position / columns);
             let xd = Math.abs(xo - x);
             let yd = Math.abs(yo - y);
             let distance = Math.sqrt(xd*xd + yd*yd);
 
             if(distance <= Math.sqrt(2)){
-                
+                callbackGreet(this.monsters[monsterId], this.monsters[i].monsterName);
+                callbackGreet(this.monsters[i], this.monsters[monsterId].monsterName);
             }
         }
     }
