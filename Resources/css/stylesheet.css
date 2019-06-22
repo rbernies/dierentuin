@@ -68,7 +68,7 @@
     border: 2px solid black;
 }   
 
-.monsterInfo:hover .monsterInfoText {
+/* .monsterInfo:hover .monsterInfoText {
     visibility: visible;
 }
 
@@ -84,7 +84,7 @@
     padding: 4px;
     text-align: center;
     position: absolute;
-}
+} */
 
 .greeting .greetingText {
     visibility: visible;
