@@ -63,8 +63,7 @@ export default class GridView {
                 img.id = monsterId + " monster";
                 img.src = this.monsterController.monsters[i].image;
                 img.addEventListener("dragstart", this.drag);
-                img.addEventListener("mouseover", event => this.controller.showMonsterProperties(event));
-                img.addEventListener("click", () => this.playSound(this.monsterController.monsters[i]));
+                img.addEventListener("click", event => this.controller.showMonsterProperties(event,this.monsterController.monsters[monsterId]));
                 div.appendChild(img);
             }
         }

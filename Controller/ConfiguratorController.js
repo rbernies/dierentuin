@@ -13,9 +13,9 @@ export default class ConfiguratorController {
         this.view.loadMonsterOptions(this.monsterController.newMonster.monsterOptions, monsterType);
     }
 
-    showMonsterProperties(event){
-        this.view.showMonsterProperties(event);
-    }
+    showMonsterProperties(event, monsterSound){
+        this.view.showMonsterProperties(event, monsterSound);
+    }  
 
     resetConfigurator(){
         this.view.resetMonsterCreator();

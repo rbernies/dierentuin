@@ -75,9 +75,10 @@ export default class MonsterController {
 
     removeMonster(id) {
         let div = document.getElementById(this.monsters[id].position);
-        let children = div.childNodes;
-        for(let i = 0; i < children.length; i++)
-            children[i].remove();
+
+        while (div.firstChild) {
+            div.removeChild(div.firstChild);
+        }
 
         this.monsters.splice(id, 1);
         for(let i = id; i < this.monsters.length; i++){

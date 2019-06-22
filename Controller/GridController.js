@@ -13,8 +13,8 @@ export default class GridController {
         this.configuratorController.resetConfigurator();
     }
 
-    showMonsterProperties(event){
-        this.configuratorController.showMonsterProperties(event);
+    showMonsterProperties(event, monsterSound){
+        this.configuratorController.showMonsterProperties(event, monsterSound);
     }
 
     previewMonster(){
