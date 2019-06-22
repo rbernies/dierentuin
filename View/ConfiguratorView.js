@@ -219,13 +219,8 @@ export default class ConfiguratorView {
                 monsterDiv.className += " monsterInfo";
                 span = document.createElement("span");
                 span.className = "monsterInfoText";
-                span.appendChild(deleteButton);
-                monsterDiv.appendChild(span);   
-            }else{
-                span = document.getElementById(monster.position).querySelector(".monsterInfoText");
-            }
-
-            if(span){
+               
+                
                 let factor = 1.0;
                 let wProps = this.controller.monsterController.getWeatherProps();
                 if(monster.monsterType == "Earth"){
@@ -248,6 +243,10 @@ export default class ConfiguratorView {
                 + "Color: " + monster.color + "<br>"
                 + "Special Power: " + (monster.specialPower*factor).toFixed(2);
                 if(factor > 1.0) span.innerHTML += " (+" + (factor*100 - 100).toFixed(0) + "%)";
+                span.appendChild(deleteButton);
+                monsterDiv.appendChild(span);
+            }else{
+                span = document.getElementById(monster.position).querySelector(".monsterInfoText");
             }
         }
     }
