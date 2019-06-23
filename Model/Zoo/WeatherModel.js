@@ -20,6 +20,7 @@ export default class WeatherModel {
             this.temperature = 0;
             this.wind = 0;
             this.rain = false;
+            this.monsterController.setWeatherProps({temperature: this.temperature, wind: this.wind, rain: this.rain});
         });
 
         let map = {};

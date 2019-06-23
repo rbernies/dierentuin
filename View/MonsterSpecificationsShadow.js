@@ -19,7 +19,6 @@ export default class MonsterSpecificationsShadow extends HTMLElement {
         span = document.createElement("span");
         span.className = "monsterInfoText";
 
-
         let factor = 1.0;
         let wProps = monsterController.getWeatherProps();
         if (monster.monsterType == "Earth") {

@@ -11,7 +11,7 @@ export default class MonsterController {
         
         this.monsterTypes = ["Water", "Fire", "Earth", "Wind"];
         this.regionId = 0;
-        this.weatherProps = {fireFactor: 1.0, windFactor: 1.0, rainFactor: 1.0, earthFactor: 1.0};
+        this.weatherProps = {fireFactor: 1.0, windFactor: 1.0, waterFactor: 1.0, earthFactor: 1.0};
     }
 
     getWeatherProps(){
@@ -19,10 +19,10 @@ export default class MonsterController {
     }
 
     setWeatherProps(props){
-        this.weatherProps = {fireFactor: 1.0, windFactor: 1.0, rainFactor: 1.0, earthFactor: 1.0};
+        this.weatherProps = {fireFactor: 1.0, windFactor: 1.0, waterFactor: 1.0, earthFactor: 1.0};
         if(props.temperature > 25) this.weatherProps.fireFactor = 1.1;
         if(props.wind > 5) this.weatherProps.windFactor = 1.1; 
-        if(props.rain) this.weatherProps.rainFactor = 1.1;
+        if(props.rain) this.weatherProps.waterFactor = 1.1;
         if(props.wind <= 0 && props.temperature >= 30) this.weatherProps.earthFactor = 1.1;
     }
 
@@ -63,6 +63,7 @@ export default class MonsterController {
         this.newMonster.position = monster.position;
         this.newMonster.regionId = monster.regionId;
         this.newMonster.monsterId = monster.monsterId;
+        this.newMonster.specialPower = monster.specialPower;
     }
 
     saveMonster() {

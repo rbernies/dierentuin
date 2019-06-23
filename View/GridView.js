@@ -69,12 +69,6 @@ export default class GridView {
         }
     }
 
-    playSound(monster){
-        let audio = new Audio(monster.audio);
-            audio.loop = false;
-            audio.play();
-    }
-
     allowDrop(ev) {
         ev.preventDefault();
     }
@@ -83,7 +77,7 @@ export default class GridView {
         ev.preventDefault();
         let data = ev.dataTransfer.getData("text");
         if(ev.target.id == data) return;
-        if(!this.controller.getModel().isPlacableTile(ev.target.id)) return;
+        if(ev.target.id == "" || ev.target.id == undefined || ev.target.id == null || !this.controller.getModel().isPlacableTile(ev.target.id)) return;
         let monsterImg = document.getElementById(data);
         ev.target.appendChild(monsterImg);
         let ids = data.split(" ");
