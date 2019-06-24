@@ -13,8 +13,8 @@ export default class ConfiguratorController {
         this.view.loadMonsterOptions(this.monsterController.newMonster.monsterOptions, monsterType);
     }
 
-    showMonsterProperties(event, monsterSound){
-        this.view.showMonsterProperties(event, monsterSound);
+    showMonsterProperties(event){
+        this.view.showMonsterProperties(event);
     }  
 
     resetConfigurator(){

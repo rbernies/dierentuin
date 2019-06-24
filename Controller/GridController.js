@@ -5,6 +5,7 @@ export default class GridController {
 
     constructor(regionId, monsterController, configuratorController){
         this.configuratorController = configuratorController;
+        this.monsterController = monsterController;
         this.model = new GridModel(monsterController, regionId);
         this.view = new GridView(this, monsterController);
     }
@@ -13,8 +14,8 @@ export default class GridController {
         this.configuratorController.resetConfigurator();
     }
 
-    showMonsterProperties(event, monsterSound){
-        this.configuratorController.showMonsterProperties(event, monsterSound);
+    showMonsterProperties(event){
+        this.configuratorController.showMonsterProperties(event);
     }
 
     previewMonster(){

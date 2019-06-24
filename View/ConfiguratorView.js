@@ -216,18 +216,18 @@ export default class ConfiguratorView {
         }       
     }
 
-    showMonsterProperties(event, monsterSound) {
+    showMonsterProperties(event) {
         let monster = this.getMonster(event);
         if (monster == null)
             return;
         
         let shadow = document.getElementsByTagName("specification-shadow");
         if(shadow.length > 0){
-        this.removeMonsterProperties(monster);
-        return;
+            this.removeMonsterProperties(monster);
+            return;
         }
 
-        this.playSound(monsterSound);
+        this.playSound(monster);
         this.monsterSpecificationsShadow = new MonsterSpecificationsShadow();
         this.monsterSpecificationsShadow.showMonsterProperties(monster, this.controller.monsterController).appendChild(this.monsterSpecificationsShadow);
     }
@@ -248,7 +248,7 @@ export default class ConfiguratorView {
         preview.className = "tile";
         preview.draggable = true;
         preview.addEventListener("dragstart", this.drag);
-        preview.addEventListener("click", event => this.showMonsterProperties(event,this.controller.monsterController.monsters[monsterId]));
+        preview.addEventListener("click", event => this.showMonsterProperties(event));
         return preview;
     }
 
